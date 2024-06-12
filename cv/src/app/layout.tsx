@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <header><Header/></header>
-        {children}
+        <main className='flex'>{children}</main>
       </body>
     </html>
   );
