@@ -18,9 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <header><Header/></header>
-        <main className='flex'>{children}</main>
+      <body >
+        <Header/>
+        <main className='flex flex-col justify-center align-middle px-5 py-5'>{children}</main>
       </body>
     </html>
   );
