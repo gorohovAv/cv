@@ -11,7 +11,7 @@ const HeaderLink = (props: LinkProps) => {
 
 const Header = () => {
     return(
-            <header className='z-50 px-4 py-4 flex flex-row items-center justify-around backdrop-blur-xl'>
+            <header className='border-b-4 z-50 px-4 py-4 flex flex-row items-center justify-around backdrop-blur-xl'>
                 <HeaderLink myPath='/about'>About</HeaderLink>
                 <HeaderLink myPath='/skills'>Skills</HeaderLink>
                 <HeaderLink myPath='/works'>Works</HeaderLink>
