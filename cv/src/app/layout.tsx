@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import Header from "@/components/Header/Header";
+import Galaxy from "@/components/Galaxy/Galaxy";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,8 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body >
-        <Header/>
-        <main className='flex flex-col justify-center align-middle px-5 py-5'>{children}</main>
+        <Header />
+        <Galaxy />
+        <main className='z-10 flex flex-col justify-center align-middle px-5 py-5'>{children}</main>
       </body>
     </html>
   );
