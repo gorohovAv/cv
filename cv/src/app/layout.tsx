@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "@/components/Header/Header";
 import Galaxy from "@/components/Galaxy/Galaxy";
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -22,7 +23,7 @@ export default function RootLayout({
       <body >
         <Header />
         <Galaxy />
-        <main className='z-10 flex flex-col justify-center align-middle px-5 py-5'>{children}</main>
+        <main className='container h-dvh z-10 flex flex-col justify-center align-middle px-5 py-5 border backdrop-blur-sm'>{children}</main>
       </body>
     </html>
   );
