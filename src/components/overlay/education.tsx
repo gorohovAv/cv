@@ -10,19 +10,41 @@ export default function Education() {
       <div className="timeline-item">
         <div className="timeline-dot" />
         <div className="timeline-content">
-          <h4>{t('education.msu')}</h4>
-          <span className="timeline-year">{t('education.msu.year')}</span>
-          <p className="timeline-degree">{t('education.msu.degree')}</p>
-          <p className="timeline-desc">{t('education.msu.desc')}</p>
+          <h4>{t('education.spbpu')}</h4>
+          <span className="timeline-year">{t('education.spbpu.year')}</span>
+          <p className="timeline-degree">{t('education.spbpu.degree')}</p>
+          <p className="timeline-desc">{t('education.spbpu.faculty')}</p>
         </div>
       </div>
+
+      <div className="timeline-divider">
+        <span>{language === 'ru' ? 'Повышение квалификации' : 'Advanced Training'}</span>
+      </div>
+
       <div className="timeline-item">
         <div className="timeline-dot" />
         <div className="timeline-content">
-          <h4>{t('education.bachelor')}</h4>
-          <span className="timeline-year">{t('education.bachelor.year')}</span>
-          <p className="timeline-degree">{t('education.bachelor.degree')}</p>
-          <p className="timeline-desc">{t('education.bachelor.desc')}</p>
+          <h4>{t('education.course.python')}</h4>
+          <span className="timeline-year">{t('education.course.python.year')}</span>
+          <p className="timeline-degree">{t('education.course.python.place')}</p>
+        </div>
+      </div>
+
+      <div className="timeline-item">
+        <div className="timeline-dot" />
+        <div className="timeline-content">
+          <h4>{t('education.course.simulation')}</h4>
+          <span className="timeline-year">{t('education.course.simulation.year')}</span>
+          <p className="timeline-degree">{t('education.course.simulation.place')}</p>
+        </div>
+      </div>
+
+      <div className="timeline-item">
+        <div className="timeline-dot" />
+        <div className="timeline-content">
+          <h4>{t('education.course.cad')}</h4>
+          <span className="timeline-year">{t('education.course.cad.year')}</span>
+          <p className="timeline-degree">{t('education.course.cad.place')}</p>
         </div>
       </div>
     </div>

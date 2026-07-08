@@ -8,72 +8,142 @@ export const texts: Record<string, { ru: string; en: string }> = {
 
   // About
   'about.title': { ru: 'Обо мне', en: 'About Me' },
-  'about.name': { ru: 'Иван Иванов', en: 'Ivan Ivanov' },
-  'about.role': { ru: 'Fullstack разработчик', en: 'Fullstack Developer' },
+  'about.name': { ru: 'Горохов Артём', en: 'Artem Gorokhov' },
+  'about.role': { ru: 'Fullstack-разработчик', en: 'Fullstack Developer' },
+  'about.age': { ru: '25 лет', en: '25 years old' },
+  'about.location': { ru: 'Санкт-Петербург, Россия', en: 'Saint Petersburg, Russia' },
+  'about.email': { ru: 'gorokhoff.art@mail.ru', en: 'gorokhoff.art@mail.ru' },
+  'about.phone': { ru: '+7 (931) 208-03-57', en: '+7 (931) 208-03-57' },
+  'about.github': { ru: 'github.com/gorohovAv', en: 'github.com/gorohovAv' },
+  'about.github.url': { ru: 'https://github.com/gorohovAv', en: 'https://github.com/gorohovAv' },
   'about.description': {
-    ru: 'Опытный разработчик с страстью к созданию элегантных и эффективных решений. Специализируюсь на веб-технологиях, распределенных системах и исследовании космоса.',
-    en: 'Experienced developer with a passion for creating elegant and efficient solutions. Specializing in web technologies, distributed systems, and space exploration.'
+    ru: 'Fullstack-разработчик широкого профиля с опытом около 4 лет. Работаю с веб-, десктоп- и мобильными приложениями (React Native). Закрываю задачи как на клиенте, так и на сервере. Умею использовать ИИ-инструменты в работе без потери качества результата.',
+    en: 'Versatile fullstack developer with ~4 years of experience. I work on web, desktop, and mobile (React Native) applications, handling both client and server sides. I integrate AI tools into my workflow without compromising quality.'
   },
-  'about.location': { ru: 'Москва, Россия', en: 'Moscow, Russia' },
-  'about.email': { ru: 'ivan@example.com', en: 'ivan@example.com' },
+  'about.stack.title': { ru: 'Основной стек', en: 'Core Stack' },
+  'about.stack.main': {
+    ru: 'TypeScript, React, Zustand, Go (Gin, GORM), PostgreSQL',
+    en: 'TypeScript, React, Zustand, Go (Gin, GORM), PostgreSQL'
+  },
+  'about.stack.extra.title': { ru: 'Также работал с', en: 'Also worked with' },
+  'about.stack.extra': {
+    ru: 'Rust, Python, Django, FastAPI, NestJS, Next.js, Redux Toolkit, Helix Editor, Electron, Docker, Prisma, BEM',
+    en: 'Rust, Python, Django, FastAPI, NestJS, Next.js, Redux Toolkit, Helix Editor, Electron, Docker, Prisma, BEM'
+  },
 
   // Education
   'education.title': { ru: 'Образование', en: 'Education' },
-  'education.msu': { ru: 'МГУ им. М.В. Ломоносова', en: 'Lomonosov Moscow State University' },
-  'education.msu.degree': { ru: 'Магистр компьютерных наук', en: 'Master of Computer Science' },
-  'education.msu.year': { ru: '2016 — 2018', en: '2016 — 2018' },
-  'education.msu.desc': {
-    ru: 'Специализация в области алгоритмов и искусственного интеллекта. Дипломная работа по оптимизации распределенных вычислений.',
-    en: 'Specialization in algorithms and artificial intelligence. Thesis on optimization of distributed computations.'
+
+  'education.spbpu': {
+    ru: 'Санкт-Петербургский политехнический университет Петра Великого',
+    en: 'Peter the Great Saint Petersburg Polytechnic University'
   },
-  'education.bachelor': { ru: 'МГТУ им. Н.Э. Баумана', en: 'Bauman Moscow State Technical University' },
-  'education.bachelor.degree': { ru: 'Бакалавр информатики', en: 'Bachelor of Informatics' },
-  'education.bachelor.year': { ru: '2012 — 2016', en: '2012 — 2016' },
-  'education.bachelor.desc': {
-    ru: 'Изучение фундаментальных основ программирования, структур данных и архитектуры вычислительных систем.',
-    en: 'Study of fundamental programming, data structures, and computational system architecture.'
+  'education.spbpu.degree': { ru: 'Бакалавр', en: 'Bachelor' },
+  'education.spbpu.faculty': {
+    ru: 'Энергомашиностроительный факультет, Энергетическое машиностроение',
+    en: 'Faculty of Power Plant Engineering, Power Engineering'
   },
+  'education.spbpu.year': { ru: '2019 — 2023', en: '2019 — 2023' },
+
+  'education.course.python': {
+    ru: 'Разработчик прикладного ПО на языке Python',
+    en: 'Applied Software Developer in Python'
+  },
+  'education.course.python.place': {
+    ru: 'СПбПУ, Программист',
+    en: 'SPbPU, Programmer'
+  },
+  'education.course.python.year': { ru: '2024', en: '2024' },
+
+  'education.course.cad': {
+    ru: 'Цифровой инжиниринг энергетического оборудования (CAD/CAM/CAE/PDM)',
+    en: 'Digital Engineering of Power Equipment (CAD/CAM/CAE/PDM)'
+  },
+  'education.course.cad.place': {
+    ru: 'СПбПУ, Специалист КТП энергомашиностроения',
+    en: 'SPbPU, Specialist in Engineering Preparation'
+  },
+  'education.course.cad.year': { ru: '2023', en: '2023' },
+
+  'education.course.simulation': {
+    ru: 'Цифровое моделирование ЖЦ энергетического оборудования',
+    en: 'Digital Simulation of Power Equipment Lifecycle'
+  },
+  'education.course.simulation.place': {
+    ru: 'СПбПУ, Специалист НИОКР',
+    en: 'SPbPU, R&D Specialist'
+  },
+  'education.course.simulation.year': { ru: '2024', en: '2024' },
 
   // Experience
   'experience.title': { ru: 'Опыт работы', en: 'Work Experience' },
-  'experience.job1.company': { ru: 'Яндекс', en: 'Yandex' },
-  'experience.job1.role': { ru: 'Senior Developer', en: 'Senior Developer' },
-  'experience.job1.year': { ru: '2021 — настоящее время', en: '2021 — present' },
+  'experience.total': { ru: '3 года 11 месяцев', en: '3 years 11 months' },
+
+  'experience.job1.company': { ru: 'Газпром ЦПС', en: 'Gazprom CPS' },
+  'experience.job1.role': { ru: 'Разработчик', en: 'Developer' },
+  'experience.job1.year': { ru: 'Ноябрь 2024 — настоящее время', en: 'November 2024 — present' },
+  'experience.job1.duration': { ru: '1 год 9 месяцев', en: '1 year 9 months' },
   'experience.job1.desc': {
-    ru: 'Разработка высоконагруженных сервисов. Оптимизация производительности, менторинг команды, внедрение новых технологий.',
-    en: 'Development of high-load services. Performance optimization, team mentoring, implementation of new technologies.'
+    ru: 'Поддержка и создание с нуля внутренних продуктов компании. Стек: TypeScript/JavaScript, Python, Go (Gin, GORM), Rust.',
+    en: 'Support and greenfield development of internal company products. Stack: TypeScript/JavaScript, Python, Go (Gin, GORM), Rust.'
   },
-  'experience.job2.company': { ru: 'VK', en: 'VK' },
-  'experience.job2.role': { ru: 'Middle Developer', en: 'Middle Developer' },
-  'experience.job2.year': { ru: '2018 — 2021', en: '2018 — 2021' },
+  'experience.job1.bullets': [
+    { ru: 'Веб-приложения на Go/Python + TypeScript/JavaScript (React, Zustand)', en: 'Web apps on Go/Python + TypeScript/JavaScript (React, Zustand)' },
+    { ru: 'Десктопная утилита на TypeScript + Electron', en: 'Desktop utility on TypeScript + Electron' },
+    { ru: 'Переписывание модуля с Python на Rust с увеличением скорости обработки', en: 'Rewriting a module from Python to Rust for performance gains' },
+    { ru: 'Настройка сервисов инференса БЯМ, ИИ-пайплайнов, RAG', en: 'Setting up LLM inference services, AI pipelines, RAG' },
+  ],
+
+  'experience.job2.company': { ru: 'Concept Group', en: 'Concept Group' },
+  'experience.job2.role': { ru: 'Веб-разработчик', en: 'Web Developer' },
+  'experience.job2.year': { ru: 'Май 2024 — Октябрь 2024', en: 'May 2024 — October 2024' },
+  'experience.job2.duration': { ru: '6 месяцев', en: '6 months' },
   'experience.job2.desc': {
-    ru: 'Разработка фронтенд и бэкенд компонентов для социальных сервисов. Работа с микросервисной архитектурой.',
-    en: 'Development of frontend and backend components for social services. Working with microservice architecture.'
+    ru: 'Разработка платформы для дизайнеров одежды.',
+    en: 'Development of a platform for fashion designers.'
   },
-  'experience.job3.company': { ru: 'Стартап', en: 'Startup' },
-  'experience.job3.role': { ru: 'Junior Developer', en: 'Junior Developer' },
-  'experience.job3.year': { ru: '2016 — 2018', en: '2016 — 2018' },
+  'experience.job2.bullets': [
+    { ru: 'Создание библиотеки компонентов, стилизация по БЭМ', en: 'Component library creation, BEM styling' },
+    { ru: 'Создание страниц на Next.js', en: 'Page development with Next.js' },
+    { ru: 'Настройка Redux store', en: 'Redux store setup' },
+    { ru: 'Написание API-методов на Next.js', en: 'Writing API methods on Next.js' },
+    { ru: 'Работа с Prisma', en: 'Working with Prisma' },
+  ],
+
+  'experience.job3.company': { ru: 'АО «Силовые Машины»', en: 'JSC «Power Machines»' },
+  'experience.job3.role': { ru: 'Инженер студенческого КБ', en: 'Student Design Bureau Engineer' },
+  'experience.job3.year': { ru: 'Сентябрь 2022 — Июнь 2024', en: 'September 2022 — June 2024' },
+  'experience.job3.duration': { ru: '1 год 10 месяцев', en: '1 year 10 months' },
   'experience.job3.desc': {
-    ru: 'Fullstack разработка веб-приложений. Участие во всех этапах жизненного цикла продукта.',
-    en: 'Fullstack web application development. Participation in all stages of the product lifecycle.'
+    ru: 'Работа в конструкторском бюро.',
+    en: 'Work in the design bureau.'
   },
+  'experience.job3.bullets': [
+    { ru: 'Оформление конструкторской документации', en: 'Preparation of design documentation' },
+    { ru: 'Создание параметризованных шаблонов', en: 'Creation of parameterized templates' },
+  ],
 
   // Projects
   'projects.title': { ru: 'Проекты', en: 'Projects' },
-  'projects.project1.name': { ru: 'Звёздный Навигатор', en: 'Star Navigator' },
+  'projects.project1.name': { ru: 'Внутренние продукты Газпром ЦПС', en: 'Gazprom CPS Internal Products' },
   'projects.project1.desc': {
-    ru: 'Интерактивная 3D карта звёздного неба с использованием Three.js и WebGL. Визуализация реальных астрономических данных.',
-    en: 'Interactive 3D star map using Three.js and WebGL. Visualization of real astronomical data.'
+    ru: 'Веб-приложения для внутренних процессов компании: backend на Go (Gin, GORM) и Python, frontend на React + Zustand. Десктопная утилита на Electron.',
+    en: 'Web applications for internal company processes: backend on Go (Gin, GORM) and Python, frontend on React + Zustand. Desktop utility on Electron.'
   },
-  'projects.project2.name': { ru: 'Распределённый Кэш', en: 'Distributed Cache' },
+  'projects.project2.name': { ru: 'Платформа для дизайнеров одежды', en: 'Fashion Designer Platform' },
   'projects.project2.desc': {
-    ru: 'Высокопроизводительная система кеширования с поддержкой репликации и шардирования. Написана на Go.',
-    en: 'High-performance caching system with replication and sharding support. Written in Go.'
+    ru: 'Платформа для дизайнеров одежды в Concept Group. Next.js, библиотека компонентов по БЭМ, Redux, Prisma, API-методы на Next.js.',
+    en: 'Platform for fashion designers at Concept Group. Next.js, BEM-based component library, Redux, Prisma, Next.js API routes.'
   },
-  'projects.project3.name': { ru: 'Нейросетевой Ассистент', en: 'Neural Assistant' },
+  'projects.project3.name': { ru: 'ИИ-пайплайны и RAG', en: 'AI Pipelines & RAG' },
   'projects.project3.desc': {
-    ru: 'Чат-бот на основе трансформерных моделей для автоматизации технической поддержки.',
-    en: 'Chatbot based on transformer models for automating technical support.'
+    ru: 'Настройка сервисов инференса больших языковых моделей, построение RAG-систем и ИИ-пайплайнов для внутренних задач.',
+    en: 'Setting up LLM inference services, building RAG systems and AI pipelines for internal tasks.'
+  },
+  'projects.project4.name': { ru: 'Ускорение обработки на Rust', en: 'Rust Performance Rewrite' },
+  'projects.project4.desc': {
+    ru: 'Переписывание вычислительного модуля с Python на Rust для существенного увеличения скорости обработки данных.',
+    en: 'Rewriting a computational module from Python to Rust for a significant speedup in data processing.'
   },
 
   // System
