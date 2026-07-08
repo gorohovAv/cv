@@ -1,0 +1,46 @@
+/* File: starHover.css */
+.star-hover {
+  position: absolute;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: white;
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 100;
+  min-width: 160px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.star-hover-content h3 {
+  margin: 0 0 6px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4dabf7;
+}
+
+.star-hover-content p {
+  margin: 2px 0;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.star-hover-distance {
+  font-weight: 500;
+  color: #63e6be;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .star-hover {
+    font-size: 10px;
+    padding: 6px 10px;
+    min-width: 140px;
+  }
+  
+  .star-hover-content h3 {
+    font-size: 12px;
+  }
+}

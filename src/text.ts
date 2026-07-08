@@ -1,3 +1,4 @@
+// File: text.ts
 export const texts: Record<string, { ru: string; en: string }> = {
   // Sidebar
   'sidebar.about': { ru: 'Обо мне', en: 'About' },
@@ -149,6 +150,50 @@ export const texts: Record<string, { ru: string; en: string }> = {
   // System
   'system.empty': { ru: 'Выберите звезду', en: 'Select a star' },
   'system.planets': { ru: 'планет', en: 'planets' },
+
+  // Star Hover
+  'starHover.distance': { 
+    ru: 'Расстояние: {distance} св. лет', 
+    en: 'Distance: {distance} ly' 
+  },
+  'starHover.constellation': { 
+    ru: 'Созвездие', 
+    en: 'Constellation' 
+  },
+  'starHover.stars': { 
+    ru: 'Звёзд: {count}', 
+    en: 'Stars: {count}' 
+  },
+  'starHover.planets': { 
+    ru: 'Планет: {count}', 
+    en: 'Planets: {count}' 
+  },
+
+  // Planet Hover
+  'planetHover.orbits': { 
+    ru: 'Обращается вокруг', 
+    en: 'Orbits' 
+  },
+  'planetHover.period': { 
+    ru: 'Период обращения', 
+    en: 'Orbital period' 
+  },
+  'planetHover.days': { 
+    ru: 'дней', 
+    en: 'days' 
+  },
+  'planetHover.mass': { 
+    ru: 'Масса', 
+    en: 'Mass' 
+  },
+  'planetHover.radius': { 
+    ru: 'Радиус', 
+    en: 'Radius' 
+  },
+  'planetHover.habitable': { 
+    ru: 'В зоне обитаемости', 
+    en: 'In habitable zone' 
+  },
 
   // Overlay
   'overlay.close': { ru: 'Закрыть', en: 'Close' },

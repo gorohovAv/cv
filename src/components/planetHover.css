@@ -1,0 +1,65 @@
+/* File: planetHover.css */
+.planet-hover {
+  position: absolute;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: white;
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 100;
+  min-width: 180px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.planet-hover-content h3 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ff922b;
+}
+
+.planet-hover-star {
+  margin: 0 0 6px 0;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+  font-style: italic;
+}
+
+.planet-hover-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 6px;
+}
+
+.planet-hover-detail {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.planet-hover-habitable {
+  margin: 4px 0 0 0;
+  font-size: 11px;
+  color: #63e6be;
+  font-weight: 500;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .planet-hover {
+    font-size: 10px;
+    padding: 6px 10px;
+    min-width: 150px;
+  }
+  
+  .planet-hover-content h3 {
+    font-size: 12px;
+  }
+  
+  .planet-hover-detail {
+    font-size: 9px;
+  }
+}
