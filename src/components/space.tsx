@@ -6,16 +6,21 @@ import './space.css'
 import { useStore, type StarData } from '../store/store'
 
 function parseCSV(csv: string): StarData[] {
-  const lines = csv.trim().split('\n')
+  const lines = csv.split(/\r?\n/).map(l => l.trim()).filter(Boolean)
+  if (lines.length < 2) return []
   return lines.slice(1).map(line => {
-    const values = line.split(',')
+    const values = line.split(',').map(v => v.trim())
+    const colorRaw = values[5] || '#ffffff'
+    // Нормализуем цвет: убеждаемся что это валидный 6-значный hex
+    const colorMatch = colorRaw.match(/^#?([0-9a-fA-F]{6})$/)
+    const color = colorMatch ? `#${colorMatch[1]}` : '#ffffff'
     return {
-      name: values[0],
-      x: parseFloat(values[1]),
-      y: parseFloat(values[2]),
-      z: parseFloat(values[3]),
-      magnitude: parseFloat(values[4]),
-      color: values[5] || '#ffffff',
+      name: values[0] || 'Unknown',
+      x: parseFloat(values[1]) || 0,
+      y: parseFloat(values[2]) || 0,
+      z: parseFloat(values[3]) || 0,
+      magnitude: parseFloat(values[4]) || 1,
+      color,
     }
   })
 }
@@ -31,16 +36,20 @@ function StarField({ stars }: StarFieldProps) {
   useEffect(() => {
     if (!meshRef.current) return
     const dummy = new THREE.Object3D()
+    const color = new THREE.Color()
     stars.forEach((star, i) => {
       dummy.position.set(star.x, star.y, star.z)
-      const scale = star.magnitude
+      const scale = Math.max(0.3, star.magnitude * 0.8)
       dummy.scale.set(scale, scale, scale)
       dummy.updateMatrix()
       meshRef.current!.setMatrixAt(i, dummy.matrix)
-      meshRef.current!.setColorAt(i, new THREE.Color(star.color))
+      color.set(star.color)
+      meshRef.current!.setColorAt(i, color)
     })
     meshRef.current.instanceMatrix.needsUpdate = true
-    if (meshRef.current.instanceColor) meshRef.current.instanceColor.needsUpdate = true
+    if (meshRef.current.instanceColor) {
+      meshRef.current.instanceColor.needsUpdate = true
+    }
   }, [stars])
 
   const handleClick = (e: any) => {
@@ -56,7 +65,7 @@ function StarField({ stars }: StarFieldProps) {
       args={[undefined, undefined, stars.length]}
       onClick={handleClick}
     >
-      <sphereGeometry args={[0.3, 8, 8]} />
+      <sphereGeometry args={[0.3, 12, 12]} />
       <meshBasicMaterial toneMapped={false} />
     </instancedMesh>
   )

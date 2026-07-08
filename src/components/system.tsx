@@ -11,6 +11,15 @@ interface Planet {
   angle: number
 }
 
+// Конвертирует hex (#rrggbb) в rgba-строку с заданной прозрачностью
+function hexToRgba(hex: string, alpha: number): string {
+  const clean = hex.replace('#', '')
+  const r = parseInt(clean.substring(0, 2), 16) || 255
+  const g = parseInt(clean.substring(2, 4), 16) || 255
+  const b = parseInt(clean.substring(4, 6), 16) || 255
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
 function generateSystem(seed: string): Planet[] {
   let hash = 0
   for (let i = 0; i < seed.length; i++) {
@@ -76,19 +85,20 @@ export default function System() {
 
       // Draw star
       if (selectedStar) {
-        const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, 20)
-        gradient.addColorStop(0, selectedStar.color)
-        gradient.addColorStop(0.5, selectedStar.color + '88')
-        gradient.addColorStop(1, 'transparent')
+        const starColor = selectedStar.color
+        const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, 22)
+        gradient.addColorStop(0, hexToRgba(starColor, 1))
+        gradient.addColorStop(0.4, hexToRgba(starColor, 0.5))
+        gradient.addColorStop(1, hexToRgba(starColor, 0))
         ctx.beginPath()
-        ctx.arc(cx, cy, 20, 0, Math.PI * 2)
+        ctx.arc(cx, cy, 22, 0, Math.PI * 2)
         ctx.fillStyle = gradient
         ctx.fill()
 
         // Core
         ctx.beginPath()
-        ctx.arc(cx, cy, 8, 0, Math.PI * 2)
-        ctx.fillStyle = selectedStar.color
+        ctx.arc(cx, cy, 7, 0, Math.PI * 2)
+        ctx.fillStyle = starColor
         ctx.fill()
       }
 
@@ -98,18 +108,19 @@ export default function System() {
         const px = cx + Math.cos(planet.angle) * planet.distance
         const py = cy + Math.sin(planet.angle) * planet.distance
 
+        // Planet glow
+        const glow = ctx.createRadialGradient(px, py, 0, px, py, planet.radius * 2.5)
+        glow.addColorStop(0, hexToRgba(planet.color, 0.3))
+        glow.addColorStop(1, hexToRgba(planet.color, 0))
+        ctx.beginPath()
+        ctx.arc(px, py, planet.radius * 2.5, 0, Math.PI * 2)
+        ctx.fillStyle = glow
+        ctx.fill()
+
+        // Planet body
         ctx.beginPath()
         ctx.arc(px, py, planet.radius, 0, Math.PI * 2)
         ctx.fillStyle = planet.color
-        ctx.fill()
-
-        // Glow
-        const glow = ctx.createRadialGradient(px, py, 0, px, py, planet.radius * 2)
-        glow.addColorStop(0, planet.color + '44')
-        glow.addColorStop(1, 'transparent')
-        ctx.beginPath()
-        ctx.arc(px, py, planet.radius * 2, 0, Math.PI * 2)
-        ctx.fillStyle = glow
         ctx.fill()
       })
 
@@ -126,8 +137,9 @@ export default function System() {
     const resize = () => {
       const parent = canvas.parentElement
       if (parent) {
-        canvas.width = parent.clientWidth
-        canvas.height = parent.clientHeight
+        const rect = parent.getBoundingClientRect()
+        canvas.width = rect.width
+        canvas.height = rect.height
       }
     }
     resize()
