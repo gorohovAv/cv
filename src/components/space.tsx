@@ -1,92 +1,12 @@
 // File: space.tsx
-import { useRef, useEffect, useState } from 'react'
-import { Canvas, useThree } from '@react-three/fiber'
+import { useEffect, useState } from 'react'
+import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Stars } from '@react-three/drei'
-import * as THREE from 'three'
 import './space.css'
-import { useStore, type StarSystemData, type StarData } from '../store/store'
+import { type StarSystemData } from '../store/store'
 import StarHover from './starHover'
 import PlanetHover from './planetHover'
-
-interface StarFieldProps {
-  systems: StarSystemData[]
-}
-
-function StarField({ systems }: StarFieldProps) {
-  const meshRef = useRef<THREE.InstancedMesh>(null)
-  const setSelectedStar = useStore(s => s.setSelectedStar)
-  const setHoveredSystem = useStore(s => s.setHoveredSystem)
-  
-  // Flatten all stars from all systems
-  const allStars: (StarData & { systemIndex: number })[] = []
-  systems.forEach((system, systemIndex) => {
-    system.stars.forEach(star => {
-      allStars.push({ ...star, systemIndex })
-    })
-  })
-
-  useEffect(() => {
-    if (!meshRef.current) return
-    const dummy = new THREE.Object3D()
-    const color = new THREE.Color()
-    allStars.forEach((star, i) => {
-      dummy.position.set(star.x, star.y, star.z)
-      const scale = Math.max(0.3, star.magnitude * 0.8)
-      dummy.scale.set(scale, scale, scale)
-      dummy.updateMatrix()
-      meshRef.current!.setMatrixAt(i, dummy.matrix)
-      color.set(star.color)
-      meshRef.current!.setColorAt(i, color)
-    })
-    meshRef.current.instanceMatrix.needsUpdate = true
-    if (meshRef.current.instanceColor) {
-      meshRef.current.instanceColor.needsUpdate = true
-    }
-  }, [systems])
-
-  const handleClick = (e: any) => {
-    e.stopPropagation()
-    if (e.instanceId !== undefined && e.instanceId < allStars.length) {
-      const star = allStars[e.instanceId]
-      setSelectedStar(star)
-    }
-  }
-
-  const handlePointerMove = (e: any) => {
-    if (e.instanceId !== undefined && e.instanceId < allStars.length) {
-      const star = allStars[e.instanceId]
-      setHoveredSystem(systems[star.systemIndex])
-      
-      // Position hover near cursor
-      const hoverElement = document.querySelector('.star-hover') as HTMLElement
-      if (hoverElement && e.clientX !== undefined) {
-        hoverElement.style.left = `${e.clientX + 15}px`
-        hoverElement.style.top = `${e.clientY + 15}px`
-      }
-    } else {
-      setHoveredSystem(null)
-    }
-  }
-
-  const handlePointerOut = () => {
-    setHoveredSystem(null)
-  }
-
-  return (
-    <>
-      <instancedMesh
-        ref={meshRef}
-        args={[undefined, undefined, allStars.length]}
-        onClick={handleClick}
-        onPointerMove={handlePointerMove}
-        onPointerOut={handlePointerOut}
-      >
-        <sphereGeometry args={[0.3, 12, 12]} />
-        <meshBasicMaterial toneMapped={false} />
-      </instancedMesh>
-    </>
-  )
-}
+import StarField from './star'
 
 function BackgroundStars() {
   return (
