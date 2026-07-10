@@ -1,8 +1,9 @@
-
-import { useRef, useEffect, useState } from 'react'
+// File: src/components/system.tsx
+import { useRef, useEffect } from 'react'
 import './system.css'
 import { useStore } from '../store/store'
 import { texts } from '../text'
+import { type PlanetData } from '../csvParser'
 
 interface Planet {
   distance: number
@@ -11,7 +12,7 @@ interface Planet {
   color: string
   angle: number
   name: string
-  data?: any
+  data?: PlanetData
 }
 
 function hexToRgba(hex: string, alpha: number): string {
@@ -31,19 +32,9 @@ function safeNumber(value: any, fallback: number): number {
   return isFinite(num) ? num : fallback
 }
 
-function generateSystemFromData(starName: string, systems: any[]): Planet[] {
-  const system = systems.find(sys => 
-    sys.stars.some((s: any) => s.name === starName)
-  )
-  
-  if (!system || !system.planets) {
-    return generateFallbackPlanets(starName)
-  }
-  
-  const starPlanets = system.planets.filter((p: any) => p.star === starName)
-  
+function generateSystemFromPlanets(starPlanets: PlanetData[]): Planet[] {
   if (starPlanets.length === 0) {
-    return generateFallbackPlanets(starName)
+    return []
   }
   
   const colors = ['#ff8844', '#44aaff', '#88ff44', '#ffaa44', '#aa88ff', '#ff6688', '#44ffcc']
@@ -64,20 +55,20 @@ function generateSystemFromData(starName: string, systems: any[]): Planet[] {
     return Math.min(maxVisualDistance, Math.max(25, distance))
   }
   
-  return starPlanets.map((planet: any, index: number) => {
-    const orbitalPeriod = safeNumber(planet.orbital_period_days, 100)
+  return starPlanets.map((planet: PlanetData, index: number) => {
+    const orbitalPeriod = safeNumber(planet.pl_orbper, 100)
     const baseSpeed = 0.5
     const speed = orbitalPeriod > 0 ? baseSpeed / orbitalPeriod : 0.1
     
-    const radiusEarth = safeNumber(planet.radius_earth, 1)
-    const semiMajorAxis = safeNumber(planet.semi_major_axis_au, 0.05)
+    const radiusEarth = safeNumber(planet.pl_rade, 1)
+    const semiMajorAxis = safeNumber(planet.pl_orbsmax, 0.05)
     
     return {
-      name: planet.name || `Planet ${index + 1}`,
+      name: planet.pl_name || `Planet ${index + 1}`,
       distance: auToPixels(semiMajorAxis),
       radius: Math.max(3, 3 + (radiusEarth * 2)),
       speed: speed,
-      color: getColor(planet.name || `planet${index}`),
+      color: getColor(planet.pl_name || `planet${index}`),
       angle: (index * Math.PI * 2) / Math.max(1, starPlanets.length),
       data: planet,
     }
@@ -119,24 +110,16 @@ export default function System() {
   const language = useStore(s => s.language)
   const planetsRef = useRef<Planet[]>([])
   const setHoveredPlanet = useStore(s => s.setHoveredPlanet)
-  const [systems, setSystems] = useState<any[]>([])
   
   useEffect(() => {
-    fetch('/stars.json')
-      .then(res => res.json())
-      .then(data => {
-        setSystems(data.stars || [])
-      })
-      .catch(err => console.error('Failed to load systems:', err))
-  }, [])
-
-  useEffect(() => {
-    if (selectedStar && systems.length > 0) {
-      planetsRef.current = generateSystemFromData(selectedStar.name, systems)
+    if (selectedStar && selectedStar.planets && selectedStar.planets.length > 0) {
+      planetsRef.current = generateSystemFromPlanets(selectedStar.planets)
     } else if (selectedStar) {
       planetsRef.current = generateFallbackPlanets(selectedStar.name)
+    } else {
+      planetsRef.current = []
     }
-  }, [selectedStar, systems])
+  }, [selectedStar])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -284,7 +267,7 @@ export default function System() {
       canvas.removeEventListener('mousemove', handleMouseMove)
       canvas.removeEventListener('mouseout', handleMouseOut)
     }
-  }, [selectedStar])
+  }, [selectedStar, setHoveredPlanet])
 
   useEffect(() => {
     const canvas = canvasRef.current

@@ -1,35 +1,22 @@
-// File: store.ts
+// File: src/store/store.ts
 import { create } from 'zustand'
+import type { StarData, PlanetData } from '../csvParser'
 
 export type Language = 'ru' | 'en'
 export type OverlayType = 'about' | 'education' | 'experience' | 'projects' | null
 
-export interface StarData {
+export interface StarSystemData {
+  id: number
   name: string
+  ra: number
+  dec: number
+  dist: number
+  mag: number
+  spect: string
   x: number
   y: number
   z: number
-  magnitude: number
   color: string
-}
-
-// New interfaces for JSON structure
-export interface PlanetData {
-  name: string
-  star: string
-  mass_earth: number
-  radius_earth: number
-  semi_major_axis_au: number
-  orbital_period_days: number
-  discovery_year: number
-  habitable_zone: boolean
-}
-
-export interface StarSystemData {
-  name: string
-  constellation: string
-  distance_ly: number
-  stars: StarData[]
   planets: PlanetData[]
 }
 
@@ -38,13 +25,24 @@ interface AppState {
   setLanguage: (lang: Language) => void
   activeOverlay: OverlayType
   setActiveOverlay: (overlay: OverlayType) => void
-  selectedStar: StarData | null
-  setSelectedStar: (star: StarData | null) => void
-  // Add selected system for hover functionality
+  selectedStar: StarSystemData | null
+  setSelectedStar: (star: StarSystemData | null) => void
   hoveredSystem: StarSystemData | null
   setHoveredSystem: (system: StarSystemData | null) => void
   hoveredPlanet: PlanetData | null
   setHoveredPlanet: (planet: PlanetData | null) => void
+  
+  // Data arrays
+  stars: StarData[]
+  setStars: (stars: StarData[]) => void
+  planets: PlanetData[]
+  setPlanets: (planets: PlanetData[]) => void
+  
+  // Loading state
+  isLoading: boolean
+  loadingProgress: number
+  loadingText: string
+  setLoading: (isLoading: boolean, progress: number, text: string) => void
 }
 
 export const useStore = create<AppState>((set) => ({
@@ -58,4 +56,18 @@ export const useStore = create<AppState>((set) => ({
   setHoveredSystem: (system) => set({ hoveredSystem: system }),
   hoveredPlanet: null,
   setHoveredPlanet: (planet) => set({ hoveredPlanet: planet }),
+  
+  stars: [],
+  setStars: (stars) => set({ stars }),
+  planets: [],
+  setPlanets: (planets) => set({ planets }),
+  
+  isLoading: false,
+  loadingProgress: 0,
+  loadingText: '',
+  setLoading: (isLoading, progress, text) => set({ 
+    isLoading, 
+    loadingProgress: progress, 
+    loadingText: text 
+  }),
 }))

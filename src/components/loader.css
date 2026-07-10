@@ -1,0 +1,171 @@
+/* File: src/components/loader.css */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, #0a0a1a 0%, #000008 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.loader-spinner {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.loader-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  animation: loader-spin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+.loader-ring:nth-child(1) {
+  border-top-color: #4488ff;
+  animation-delay: 0s;
+}
+
+.loader-ring:nth-child(2) {
+  border-right-color: #88aaff;
+  animation-delay: 0.2s;
+  width: 80%;
+  height: 80%;
+  top: 10%;
+  left: 10%;
+}
+
+.loader-ring:nth-child(3) {
+  border-bottom-color: #aaccff;
+  animation-delay: 0.4s;
+  width: 60%;
+  height: 60%;
+  top: 20%;
+  left: 20%;
+}
+
+@keyframes loader-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader-text {
+  color: #aaccff;
+  font-size: 1.2rem;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(68, 136, 255, 0.5);
+}
+
+.loader-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 300px;
+}
+
+.loader-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.loader-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4488ff 0%, #88aaff 50%, #aaccff 100%);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(68, 136, 255, 0.8);
+  position: relative;
+}
+
+.loader-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: loader-shimmer 2s infinite;
+}
+
+@keyframes loader-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.loader-progress-text {
+  color: #88aaff;
+  font-size: 0.9rem;
+  font-family: 'Courier New', monospace;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .loader-spinner {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .loader-text {
+    font-size: 1rem;
+  }
+  
+  .loader-progress {
+    width: 250px;
+  }
+  
+  .loader-content {
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .loader-spinner {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .loader-text {
+    font-size: 0.9rem;
+  }
+  
+  .loader-progress {
+    width: 200px;
+  }
+  
+  .loader-content {
+    gap: 1rem;
+    padding: 1rem;
+  }
+}

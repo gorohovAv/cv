@@ -1,7 +1,7 @@
-// File: star.tsx
+// File: src/components/star.tsx
 import { useRef, useEffect, useMemo } from 'react'
 import * as THREE from 'three'
-import { useStore, type StarSystemData, type StarData } from '../store/store'
+import { useStore, type StarSystemData } from '../store/store'
 import './star.css'
 
 interface StarFieldProps {
@@ -104,14 +104,12 @@ export default function StarField({ systems }: StarFieldProps) {
   const setSelectedStar = useStore(s => s.setSelectedStar)
   const setHoveredSystem = useStore(s => s.setHoveredSystem)
   
+  // Теперь systems - это массив звезд, каждая система = одна звезда
   const allStars = useMemo(() => {
-    const stars: (StarData & { systemIndex: number })[] = []
-    systems.forEach((system, systemIndex) => {
-      system.stars.forEach(star => {
-        stars.push({ ...star, systemIndex })
-      })
-    })
-    return stars
+    return systems.map((system, index) => ({
+      ...system,
+      systemIndex: index,
+    }))
   }, [systems])
 
   const classMap: Record<string, number> = {
@@ -122,21 +120,25 @@ export default function StarField({ systems }: StarFieldProps) {
   const geometry = useMemo(() => new THREE.PlaneGeometry(1, 1), [])
 
   useEffect(() => {
-    if (!meshRef.current) return
+    if (!meshRef.current || allStars.length === 0) return
     
     const dummy = new THREE.Object3D()
     const classArray = new Float32Array(allStars.length)
     const massArray = new Float32Array(allStars.length)
     
     allStars.forEach((star, i) => {
-      const s = star as any
       dummy.position.set(star.x, star.y, star.z)
       dummy.updateMatrix()
       meshRef.current!.setMatrixAt(i, dummy.matrix)
       
-      // Fallback to 'G' class and 1.0 mass if not present in data
-      classArray[i] = classMap[s.class || 'G'] ?? 4
-      massArray[i] = s.mass || 1.0
+      // Используем spect для спектрального класса и mag для массы/яркости
+      const spectralClass = star.spect ? star.spect.charAt(0).toUpperCase() : 'G'
+      classArray[i] = classMap[spectralClass] ?? 4
+      
+      // Используем абсолютную величину как меру массы/яркости
+      // Чем меньше mag, тем ярче звезда
+      const brightness = star.mag ? Math.max(0.1, 10 - star.mag) : 1.0
+      massArray[i] = brightness
     })
     
     meshRef.current.instanceMatrix.needsUpdate = true
@@ -178,6 +180,8 @@ export default function StarField({ systems }: StarFieldProps) {
   const handlePointerOut = () => {
     setHoveredSystem(null)
   }
+
+  if (allStars.length === 0) return null
 
   return (
     <instancedMesh
