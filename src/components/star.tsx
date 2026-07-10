@@ -1,6 +1,7 @@
 // File: src/components/star.tsx
-import { useRef, useEffect, useMemo } from 'react'
+import { useRef, useEffect, useMemo, useCallback } from 'react'
 import * as THREE from 'three'
+import { useThree, useFrame } from '@react-three/fiber'
 import { useStore, type StarSystemData } from '../store/store'
 import './star.css'
 
@@ -101,8 +102,10 @@ void main() {
 
 export default function StarField({ systems }: StarFieldProps) {
   const meshRef = useRef<THREE.InstancedMesh>(null)
+  const { camera, gl, raycaster } = useThree()
   const setSelectedStar = useStore(s => s.setSelectedStar)
   const setHoveredSystem = useStore(s => s.setHoveredSystem)
+  const hoveredSystem = useStore(s => s.hoveredSystem)
   
   // Теперь systems - это массив звезд, каждая система = одна звезда
   const allStars = useMemo(() => {
@@ -154,32 +157,148 @@ export default function StarField({ systems }: StarFieldProps) {
     
   }, [allStars, geometry])
 
-  const handleClick = (e: any) => {
-    e.stopPropagation()
-    if (e.instanceId !== undefined && e.instanceId < allStars.length) {
-      const star = allStars[e.instanceId]
-      setSelectedStar(star)
+  // Функция для проецирования 3D позиции на 2D экран
+  const projectToScreen = useCallback((position: THREE.Vector3) => {
+    const vector = position.clone()
+    vector.project(camera)
+    
+    const width = gl.domElement.clientWidth
+    const height = gl.domElement.clientHeight
+    
+    return {
+      x: (vector.x * 0.5 + 0.5) * width,
+      y: (-vector.y * 0.5 + 0.5) * height,
+      visible: vector.z < 1 // Проверяем что объект перед камерой
     }
-  }
+  }, [camera, gl])
 
-  const handlePointerMove = (e: any) => {
-    if (e.instanceId !== undefined && e.instanceId < allStars.length) {
-      const star = allStars[e.instanceId]
-      setHoveredSystem(systems[star.systemIndex])
+  // Функция для поиска ближайшей звезды к позиции мыши
+  const findClosestStarToMouse = useCallback((clientX: number, clientY: number) => {
+    if (!meshRef.current || allStars.length === 0) return null
+    
+    const rect = gl.domElement.getBoundingClientRect()
+    const mouse = new THREE.Vector2(
+      ((clientX - rect.left) / rect.width) * 2 - 1,
+      -((clientY - rect.top) / rect.height) * 2 + 1
+    )
+    
+    raycaster.setFromCamera(mouse, camera)
+    
+    // Проверяем пересечение луча с позициями звезд
+    let closestStar = null
+    let minDistance = Infinity
+    const threshold = 3.0 // Радиус поиска в мировых координатах
+    
+    for (let i = 0; i < allStars.length; i++) {
+      const star = allStars[i]
+      const starPosition = new THREE.Vector3(star.x, star.y, star.z)
       
-      const hoverElement = document.querySelector('.star-hover') as HTMLElement
-      if (hoverElement && e.clientX !== undefined) {
-        hoverElement.style.left = `${e.clientX + 15}px`
-        hoverElement.style.top = `${e.clientY + 15}px`
+      // Вычисляем расстояние от луча до позиции звезды
+      const rayDistance = raycaster.ray.distanceToPoint(starPosition)
+      
+      // Также проверяем что звезда перед камерой
+      const cameraDistance = camera.position.distanceTo(starPosition)
+      
+      // Используем комбинированную метрику: расстояние от луча + штраф за удаленность
+      const combinedDistance = rayDistance + cameraDistance * 0.01
+      
+      if (rayDistance < threshold && combinedDistance < minDistance) {
+        minDistance = combinedDistance
+        closestStar = { star, index: i }
       }
-    } else {
+    }
+    
+    return closestStar
+  }, [allStars, camera, gl, raycaster])
+
+  // Обновление позиции hover на каждом кадре если есть hoveredSystem
+  useFrame(() => {
+    if (!hoveredSystem) return
+    
+    const hoverElement = document.querySelector('.star-hover') as HTMLElement
+    if (!hoverElement) return
+    
+    // Проецируем 3D позицию звезды на 2D экран
+    const starPosition = new THREE.Vector3(hoveredSystem.x, hoveredSystem.y, hoveredSystem.z)
+    const screenPos = projectToScreen(starPosition)
+    
+    if (screenPos.visible) {
+      // Позиционируем hover с учетом границ экрана
+      const hoverWidth = hoverElement.offsetWidth || 160
+      const hoverHeight = hoverElement.offsetHeight || 100
+      const canvasWidth = gl.domElement.clientWidth
+      const canvasHeight = gl.domElement.clientHeight
+      
+      let left = screenPos.x + 15
+      let top = screenPos.y + 15
+      
+      // Проверяем правую границу
+      if (left + hoverWidth > canvasWidth) {
+        left = screenPos.x - hoverWidth - 15
+      }
+      
+      // Проверяем нижнюю границу
+      if (top + hoverHeight > canvasHeight) {
+        top = screenPos.y - hoverHeight - 15
+      }
+      
+      // Проверяем левую границу
+      if (left < 0) {
+        left = 10
+      }
+      
+      // Проверяем верхнюю границу
+      if (top < 0) {
+        top = 10
+      }
+      
+      hoverElement.style.left = `${left}px`
+      hoverElement.style.top = `${top}px`
+    }
+  })
+
+  // Обработчик клика
+  useEffect(() => {
+    const canvas = gl.domElement
+    
+    const handleClick = (e: MouseEvent) => {
+      const closestStar = findClosestStarToMouse(e.clientX, e.clientY)
+      if (closestStar) {
+        setSelectedStar(allStars[closestStar.index])
+      }
+    }
+    
+    canvas.addEventListener('click', handleClick)
+    return () => canvas.removeEventListener('click', handleClick)
+  }, [findClosestStarToMouse, allStars, setSelectedStar, gl])
+
+  // Обработчик движения мыши для hover
+  useEffect(() => {
+    const canvas = gl.domElement
+    
+    const handlePointerMove = (e: MouseEvent) => {
+      const closestStar = findClosestStarToMouse(e.clientX, e.clientY)
+      
+      if (closestStar) {
+        const star = allStars[closestStar.index]
+        setHoveredSystem(star)
+      } else {
+        setHoveredSystem(null)
+      }
+    }
+    
+    const handlePointerOut = () => {
       setHoveredSystem(null)
     }
-  }
-
-  const handlePointerOut = () => {
-    setHoveredSystem(null)
-  }
+    
+    canvas.addEventListener('mousemove', handlePointerMove)
+    canvas.addEventListener('mouseout', handlePointerOut)
+    
+    return () => {
+      canvas.removeEventListener('mousemove', handlePointerMove)
+      canvas.removeEventListener('mouseout', handlePointerOut)
+    }
+  }, [findClosestStarToMouse, allStars, setHoveredSystem, gl])
 
   if (allStars.length === 0) return null
 
@@ -187,9 +306,6 @@ export default function StarField({ systems }: StarFieldProps) {
     <instancedMesh
       ref={meshRef}
       args={[geometry, undefined, allStars.length]}
-      onClick={handleClick}
-      onPointerMove={handlePointerMove}
-      onPointerOut={handlePointerOut}
       frustumCulled={false}
     >
       <shaderMaterial
