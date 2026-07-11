@@ -48,15 +48,57 @@ function SpaceScene() {
   
   // Convert StarData to StarSystemData with color and planets
   const systems: StarSystemData[] = stars.map(star => {
-    const starPlanets = planets.filter(p => {
-      // Match planets to stars by hostname and proximity
-      const distance = Math.sqrt(
-        Math.pow(p.ra - star.ra, 2) + 
-        Math.pow(p.dec - star.dec, 2) + 
-        Math.pow(p.sy_dist - star.dist, 2)
-      )
-      return distance < 0.1 // Small threshold for matching
+    // Логируем процесс матчинга для каждой звезды
+    console.log(`\n🔍 Matching star: ${star.name} (id: ${star.id})`)
+    console.log(`   Coordinates: ra=${star.ra}, dec=${star.dec}, dist=${star.dist}`)
+    
+    // Сначала пробуем точный матч по имени (hostname из NASA = name из HYG)
+    let starPlanets = planets.filter(p => {
+      const hostname = p.hostname?.trim().toLowerCase()
+      const starName = star.name?.trim().toLowerCase()
+      return hostname && starName && hostname === starName
     })
+    
+    if (starPlanets.length > 0) {
+      console.log(`   ✅ Found ${starPlanets.length} planet(s) by exact hostname match`)
+      starPlanets.forEach(p => {
+        console.log(`      - ${p.pl_name} (hostname: ${p.hostname})`)
+      })
+    } else {
+      // Если точного матча нет, пробуем частичное совпадение
+      starPlanets = planets.filter(p => {
+        const hostname = p.hostname?.trim().toLowerCase() || ''
+        const starName = star.name?.trim().toLowerCase() || ''
+        // Проверяем, содержит ли hostname имя звезды или наоборот
+        return hostname.includes(starName) || starName.includes(hostname)
+      })
+      
+      if (starPlanets.length > 0) {
+        console.log(`   ⚠️ Found ${starPlanets.length} planet(s) by partial name match`)
+        starPlanets.forEach(p => {
+          console.log(`      - ${p.pl_name} (hostname: ${p.hostname})`)
+        })
+      } else {
+        // Если и частичного матча нет, пробуем матч по координатам
+        starPlanets = planets.filter(p => {
+          const distance = Math.sqrt(
+            Math.pow(p.ra - star.ra, 2) + 
+            Math.pow(p.dec - star.dec, 2) + 
+            Math.pow(p.sy_dist - star.dist, 2)
+          )
+          return distance < 0.1
+        })
+        
+        if (starPlanets.length > 0) {
+          console.log(`   📍 Found ${starPlanets.length} planet(s) by coordinate match`)
+          starPlanets.forEach(p => {
+            console.log(`      - ${p.pl_name} (hostname: ${p.hostname})`)
+          })
+        } else {
+          console.log(`   ❌ No planets found for this star`)
+        }
+      }
+    }
     
     return {
       id: star.id,
@@ -73,6 +115,13 @@ function SpaceScene() {
       planets: starPlanets,
     }
   })
+  
+  // Логируем общую статистику
+  const starsWithPlanets = systems.filter(s => s.planets.length > 0)
+  console.log(`\n📊 Matching summary:`)
+  console.log(`   Total stars: ${systems.length}`)
+  console.log(`   Stars with planets: ${starsWithPlanets.length}`)
+  console.log(`   Stars without planets: ${systems.length - starsWithPlanets.length}`)
 
   return (
     <>

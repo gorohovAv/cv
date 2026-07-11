@@ -1,5 +1,5 @@
 // File: src/components/system.tsx
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import './system.css'
 import { useStore } from '../store/store'
 import { texts } from '../text'
@@ -37,6 +37,27 @@ function generateSystemFromPlanets(starPlanets: PlanetData[]): Planet[] {
     return []
   }
   
+  console.log(`\n🔬 Analyzing ${starPlanets.length} planet record(s):`)
+  
+  // Дедупликация по имени планеты - оставляем только уникальные планеты
+  const uniquePlanetsMap = new Map<string, PlanetData>()
+  starPlanets.forEach(planet => {
+    const planetName = planet.pl_name?.trim()
+    if (!planetName) return
+    
+    // Если планеты с таким именем ещё нет, или текущая запись имеет default_flag = 1
+    if (!uniquePlanetsMap.has(planetName) || planet.default_flag === 1) {
+      uniquePlanetsMap.set(planetName, planet)
+    }
+  })
+  
+  const uniquePlanets = Array.from(uniquePlanetsMap.values())
+  console.log(`   Unique planets after deduplication: ${uniquePlanets.length}`)
+  
+  if (uniquePlanets.length < starPlanets.length) {
+    console.log(`   ⚠️ Removed ${starPlanets.length - uniquePlanets.length} duplicate record(s)`)
+  }
+  
   const colors = ['#ff8844', '#44aaff', '#88ff44', '#ffaa44', '#aa88ff', '#ff6688', '#44ffcc']
   const getColor = (name: string) => {
     let hash = 0
@@ -47,60 +68,79 @@ function generateSystemFromPlanets(starPlanets: PlanetData[]): Planet[] {
     return colors[Math.abs(hash) % colors.length]
   }
   
-  const maxVisualDistance = 120
-  const auToPixels = (au: number) => {
-    const safeAu = safeNumber(au, 0.05)
-    const logValue = Math.log(safeAu + 1)
-    const distance = 25 + logValue * 40
-    return Math.min(maxVisualDistance, Math.max(25, distance))
+  // Собираем все валидные значения полуосей
+  const semiMajorAxes: number[] = []
+  uniquePlanets.forEach(planet => {
+    const semiMajorAxis = safeNumber(planet.pl_orbsmax, NaN)
+    if (isFinite(semiMajorAxis) && semiMajorAxis > 0) {
+      semiMajorAxes.push(semiMajorAxis)
+    }
+  })
+  
+  console.log(`   Valid semi-major axes found: ${semiMajorAxes.length}/${uniquePlanets.length}`)
+  if (semiMajorAxes.length > 0) {
+    const minAu = Math.min(...semiMajorAxes)
+    const maxAu = Math.max(...semiMajorAxes)
+    console.log(`   Range: ${minAu.toFixed(3)} - ${maxAu.toFixed(3)} AU`)
   }
   
-  return starPlanets.map((planet: PlanetData, index: number) => {
+  const minVisualDistance = 25
+  const maxVisualDistance = 120
+  
+  // Функция нормализации - распределяет планеты пропорционально их реальным расстояниям
+  const auToPixels = (au: number, index: number) => {
+    if (!isFinite(au) || au <= 0) {
+      // Если значение невалидное, распределяем равномерно
+      const spacing = (maxVisualDistance - minVisualDistance) / Math.max(1, uniquePlanets.length - 1)
+      return minVisualDistance + index * spacing
+    }
+    
+    // Если только одна планета или все имеют одинаковую полуось
+    if (semiMajorAxes.length === 0) {
+      return minVisualDistance + 20
+    }
+    
+    const minAu = Math.min(...semiMajorAxes)
+    const maxAu = Math.max(...semiMajorAxes)
+    
+    // Если все планеты на одинаковом расстоянии
+    if (maxAu === minAu) {
+      // Распределяем их равномерно
+      const spacing = (maxVisualDistance - minVisualDistance) / Math.max(1, uniquePlanets.length - 1)
+      return minVisualDistance + index * spacing
+    }
+    
+    // Нормализуем значение в диапазон [minVisualDistance, maxVisualDistance]
+    const normalized = (au - minAu) / (maxAu - minAu)
+    return minVisualDistance + normalized * (maxVisualDistance - minVisualDistance)
+  }
+  
+  return uniquePlanets.map((planet: PlanetData, index: number) => {
     const orbitalPeriod = safeNumber(planet.pl_orbper, 100)
     const baseSpeed = 0.5
     const speed = orbitalPeriod > 0 ? baseSpeed / orbitalPeriod : 0.1
     
     const radiusEarth = safeNumber(planet.pl_rade, 1)
-    const semiMajorAxis = safeNumber(planet.pl_orbsmax, 0.05)
+    const semiMajorAxis = safeNumber(planet.pl_orbsmax, NaN)
+    
+    const distance = auToPixels(semiMajorAxis, index)
+    
+    console.log(`   Planet ${index + 1}: ${planet.pl_name}`)
+    console.log(`      - Semi-major axis: ${isFinite(semiMajorAxis) ? semiMajorAxis.toFixed(3) : 'N/A'} AU`)
+    console.log(`      - Orbital period: ${isFinite(orbitalPeriod) ? orbitalPeriod.toFixed(1) : 'N/A'} days`)
+    console.log(`      - Visual distance: ${distance.toFixed(1)}px`)
+    console.log(`      - Speed: ${speed.toFixed(4)}`)
     
     return {
       name: planet.pl_name || `Planet ${index + 1}`,
-      distance: auToPixels(semiMajorAxis),
+      distance: distance,
       radius: Math.max(3, 3 + (radiusEarth * 2)),
       speed: speed,
       color: getColor(planet.pl_name || `planet${index}`),
-      angle: (index * Math.PI * 2) / Math.max(1, starPlanets.length),
+      angle: (index * Math.PI * 2) / Math.max(1, uniquePlanets.length),
       data: planet,
     }
   })
-}
-
-function generateFallbackPlanets(seed: string): Planet[] {
-  let hash = 0
-  for (let i = 0; i < seed.length; i++) {
-    hash = ((hash << 5) - hash) + seed.charCodeAt(i)
-    hash |= 0
-  }
-  const rng = () => {
-    hash = (hash * 1103515245 + 12345) & 0x7fffffff
-    return hash / 0x7fffffff
-  }
-
-  const count = Math.floor(rng() * 5) + 2
-  const planets: Planet[] = []
-  const colors = ['#ff8844', '#44aaff', '#88ff44', '#ffaa44', '#aa88ff', '#ff6688', '#44ffcc']
-
-  for (let i = 0; i < count; i++) {
-    planets.push({
-      name: `Planet ${i+1}`,
-      distance: 30 + i * 22 + rng() * 10,
-      radius: 3 + rng() * 5,
-      speed: 0.2 + rng() * 0.8,
-      color: colors[Math.floor(rng() * colors.length)],
-      angle: rng() * Math.PI * 2,
-    })
-  }
-  return planets
 }
 
 export default function System() {
@@ -108,16 +148,21 @@ export default function System() {
   const animRef = useRef<number>(0)
   const selectedStar = useStore(s => s.selectedStar)
   const language = useStore(s => s.language)
-  const planetsRef = useRef<Planet[]>([])
+  const [planets, setPlanets] = useState<Planet[]>([])
   const setHoveredPlanet = useStore(s => s.setHoveredPlanet)
   
   useEffect(() => {
     if (selectedStar && selectedStar.planets && selectedStar.planets.length > 0) {
-      planetsRef.current = generateSystemFromPlanets(selectedStar.planets)
+      console.log(`\n🪐 Generating system for star: ${selectedStar.name}`)
+      console.log(`   Planet records in data: ${selectedStar.planets.length}`)
+      const generatedPlanets = generateSystemFromPlanets(selectedStar.planets)
+      setPlanets(generatedPlanets)
+      console.log(`   Generated ${generatedPlanets.length} unique visual planet(s)`)
     } else if (selectedStar) {
-      planetsRef.current = generateFallbackPlanets(selectedStar.name)
+      console.log(`\n⭐ Star ${selectedStar.name} has no confirmed planets - showing star only`)
+      setPlanets([])
     } else {
-      planetsRef.current = []
+      setPlanets([])
     }
   }, [selectedStar])
 
@@ -136,7 +181,7 @@ export default function System() {
       ctx.clearRect(0, 0, w, h)
 
       // Draw orbits
-      planetsRef.current.forEach(planet => {
+      planets.forEach(planet => {
         const distance = safeNumber(planet.distance, 0)
         if (distance > 0) {
           ctx.beginPath()
@@ -166,7 +211,7 @@ export default function System() {
       }
 
       // Draw planets
-      planetsRef.current.forEach(planet => {
+      planets.forEach(planet => {
         // Валидация всех значений
         const distance = safeNumber(planet.distance, 30)
         const radius = safeNumber(planet.radius, 3)
@@ -213,7 +258,7 @@ export default function System() {
 
     animate()
     return () => cancelAnimationFrame(animRef.current)
-  }, [selectedStar])
+  }, [selectedStar, planets])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -229,7 +274,7 @@ export default function System() {
       let closestPlanet: Planet | null = null
       let minDist = Infinity
       
-      planetsRef.current.forEach(planet => {
+      planets.forEach(planet => {
         const distance = safeNumber(planet.distance, 0)
         const radius = safeNumber(planet.radius, 3)
         const angle = safeNumber(planet.angle, 0)
@@ -267,7 +312,7 @@ export default function System() {
       canvas.removeEventListener('mousemove', handleMouseMove)
       canvas.removeEventListener('mouseout', handleMouseOut)
     }
-  }, [selectedStar, setHoveredPlanet])
+  }, [selectedStar, planets, setHoveredPlanet])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -292,7 +337,7 @@ export default function System() {
           <div className="system-header">
             <span className="system-star-name">{selectedStar.name}</span>
             <span className="system-planet-count">
-              {planetsRef.current.length} {texts['system.planets'][language]}
+              {planets.length} {texts['system.planets'][language]}
             </span>
           </div>
           <canvas ref={canvasRef} className="system-canvas" />
