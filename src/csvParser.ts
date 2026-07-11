@@ -11,6 +11,9 @@ export interface StarData {
   x: number
   y: number
   z: number
+  gl: string // Gliese catalog identifier (e.g., "GL 273")
+  hd: string // HD catalog identifier
+  hip: string // Hipparcos catalog identifier
 }
 
 export interface PlanetData {
@@ -159,6 +162,9 @@ export function parseHYG(text: string): StarData[] {
   const xIdx = headers.indexOf('x')
   const yIdx = headers.indexOf('y')
   const zIdx = headers.indexOf('z')
+  const glIdx = headers.indexOf('gl')
+  const hdIdx = headers.indexOf('hd')
+  const hipIdx = headers.indexOf('hip')
   
   for (let i = 1; i < lines.length; i++) {
     const values = parseCSVLine(lines[i])
@@ -181,6 +187,9 @@ export function parseHYG(text: string): StarData[] {
       x: parseNumber(values[xIdx]) || 0,
       y: parseNumber(values[yIdx]) || 0,
       z: parseNumber(values[zIdx]) || 0,
+      gl: parseString(values[glIdx]),
+      hd: parseString(values[hdIdx]),
+      hip: parseString(values[hipIdx]),
     })
   }
   

@@ -42,62 +42,129 @@ function getStarColor(spect: string): string {
   }
 }
 
+// Извлекает числовой идентификатор из Gliese/GJ/GL имени
+// Примеры: "GL 273" -> "273", "GJ 273" -> "273", "Gliese 273" -> "273"
+function extractGlieseNumber(name: string): string | null {
+  if (!name) return null
+  const normalized = name.trim().toUpperCase()
+  
+  // Ищем паттерны: GL 273, GJ 273, GLIESE 273, GJ273, GL273
+  const match = normalized.match(/^(?:GL|GJ|GLIESE)\s*(\d+)(?:\s*[A-Z])?$/)
+  if (match) {
+    return match[1]
+  }
+  
+  return null
+}
+
+// Извлекает идентификаторы каталогов из hostname NASA
+// Возвращает объект с возможными идентификаторами
+function extractCatalogIds(hostname: string): { gliese?: string; hd?: string; hip?: string } {
+  if (!hostname) return {}
+  
+  const result: { gliese?: string; hd?: string; hip?: string } = {}
+  const upper = hostname.toUpperCase()
+  
+  // Gliese/GJ/GL
+  const glMatch = upper.match(/(?:GL|GJ|GLIESE)\s*(\d+)/)
+  if (glMatch) {
+    result.gliese = glMatch[1]
+  }
+  
+  // HD
+  const hdMatch = upper.match(/HD\s*(\d+)/)
+  if (hdMatch) {
+    result.hd = hdMatch[1]
+  }
+  
+  // HIP
+  const hipMatch = upper.match(/HIP\s*(\d+)/)
+  if (hipMatch) {
+    result.hip = hipMatch[1]
+  }
+  
+  return result
+}
+
+// Проверяет, соответствует ли планета звезде
+function matchPlanetToStar(planet: PlanetData, star: StarData): { matched: boolean; method: string } {
+  const hostname = planet.hostname || ''
+  const starName = star.name || ''
+  
+  // 1. Точный матч по имени (hostname = name)
+  if (hostname.toLowerCase().trim() === starName.toLowerCase().trim()) {
+    return { matched: true, method: 'exact name' }
+  }
+  
+  // 2. Матч по Gliese/GJ/GL идентификатору
+  const starGlNum = extractGlieseNumber(star.gl)
+  const hostCatalogIds = extractCatalogIds(hostname)
+  
+  if (starGlNum && hostCatalogIds.gliese && starGlNum === hostCatalogIds.gliese) {
+    return { matched: true, method: 'Gliese/GJ/GL ID' }
+  }
+  
+  // 3. Матч по HD идентификатору
+  if (star.hd && hostCatalogIds.hd) {
+    const starHdNum = star.hd.replace(/\D/g, '')
+    if (starHdNum === hostCatalogIds.hd) {
+      return { matched: true, method: 'HD ID' }
+    }
+  }
+  
+  // 4. Матч по Hipparcos идентификатору
+  if (star.hip && hostCatalogIds.hip) {
+    const starHipNum = star.hip.replace(/\D/g, '')
+    if (starHipNum === hostCatalogIds.hip) {
+      return { matched: true, method: 'HIP ID' }
+    }
+  }
+  
+  // 5. Частичный матч по имени (hostname содержит name или наоборот)
+  const hostnameLower = hostname.toLowerCase().trim()
+  const starNameLower = starName.toLowerCase().trim()
+  if (hostnameLower.includes(starNameLower) || starNameLower.includes(hostnameLower)) {
+    return { matched: true, method: 'partial name' }
+  }
+  
+  return { matched: false, method: 'none' }
+}
+
 function SpaceScene() {
   const stars = useStore(s => s.stars)
   const planets = useStore(s => s.planets)
   
+  // Логируем статистику по методам матчинга
+  const matchStats = {
+    'exact name': 0,
+    'Gliese/GJ/GL ID': 0,
+    'HD ID': 0,
+    'HIP ID': 0,
+    'partial name': 0,
+    'none': 0,
+  }
+  
   // Convert StarData to StarSystemData with color and planets
   const systems: StarSystemData[] = stars.map(star => {
-    // Логируем процесс матчинга для каждой звезды
-    console.log(`\n🔍 Matching star: ${star.name} (id: ${star.id})`)
-    console.log(`   Coordinates: ra=${star.ra}, dec=${star.dec}, dist=${star.dist}`)
+    const starPlanets: PlanetData[] = []
     
-    // Сначала пробуем точный матч по имени (hostname из NASA = name из HYG)
-    let starPlanets = planets.filter(p => {
-      const hostname = p.hostname?.trim().toLowerCase()
-      const starName = star.name?.trim().toLowerCase()
-      return hostname && starName && hostname === starName
+    planets.forEach(planet => {
+      const result = matchPlanetToStar(planet, star)
+      if (result.matched) {
+        starPlanets.push(planet)
+        matchStats[result.method as keyof typeof matchStats]++
+      }
     })
     
+    // Логируем только звезды с планетами
     if (starPlanets.length > 0) {
-      console.log(`   ✅ Found ${starPlanets.length} planet(s) by exact hostname match`)
+      console.log(`\n🔍 Star: ${star.name}`)
+      console.log(`   GL: ${star.gl || 'N/A'}, HD: ${star.hd || 'N/A'}, HIP: ${star.hip || 'N/A'}`)
+      console.log(`   Found ${starPlanets.length} planet(s):`)
       starPlanets.forEach(p => {
-        console.log(`      - ${p.pl_name} (hostname: ${p.hostname})`)
+        const result = matchPlanetToStar(p, star)
+        console.log(`      - ${p.pl_name} (hostname: ${p.hostname}) via ${result.method}`)
       })
-    } else {
-      // Если точного матча нет, пробуем частичное совпадение
-      starPlanets = planets.filter(p => {
-        const hostname = p.hostname?.trim().toLowerCase() || ''
-        const starName = star.name?.trim().toLowerCase() || ''
-        // Проверяем, содержит ли hostname имя звезды или наоборот
-        return hostname.includes(starName) || starName.includes(hostname)
-      })
-      
-      if (starPlanets.length > 0) {
-        console.log(`   ⚠️ Found ${starPlanets.length} planet(s) by partial name match`)
-        starPlanets.forEach(p => {
-          console.log(`      - ${p.pl_name} (hostname: ${p.hostname})`)
-        })
-      } else {
-        // Если и частичного матча нет, пробуем матч по координатам
-        starPlanets = planets.filter(p => {
-          const distance = Math.sqrt(
-            Math.pow(p.ra - star.ra, 2) + 
-            Math.pow(p.dec - star.dec, 2) + 
-            Math.pow(p.sy_dist - star.dist, 2)
-          )
-          return distance < 0.1
-        })
-        
-        if (starPlanets.length > 0) {
-          console.log(`   📍 Found ${starPlanets.length} planet(s) by coordinate match`)
-          starPlanets.forEach(p => {
-            console.log(`      - ${p.pl_name} (hostname: ${p.hostname})`)
-          })
-        } else {
-          console.log(`   ❌ No planets found for this star`)
-        }
-      }
     }
     
     return {
@@ -122,6 +189,12 @@ function SpaceScene() {
   console.log(`   Total stars: ${systems.length}`)
   console.log(`   Stars with planets: ${starsWithPlanets.length}`)
   console.log(`   Stars without planets: ${systems.length - starsWithPlanets.length}`)
+  console.log(`   Match methods:`)
+  Object.entries(matchStats).forEach(([method, count]) => {
+    if (count > 0) {
+      console.log(`      ${method}: ${count}`)
+    }
+  })
 
   return (
     <>
