@@ -264,14 +264,14 @@ export default function Space() {
         }
         
         const solarPlanetsData = [
-          { pl_name: 'Mercury', hostname: 'Sun', pl_orbsmax: 0.387, pl_orbper: 88.0, pl_rade: 0.383 },
-          { pl_name: 'Venus', hostname: 'Sun', pl_orbsmax: 0.723, pl_orbper: 224.7, pl_rade: 0.949 },
-          { pl_name: 'Earth', hostname: 'Sun', pl_orbsmax: 1.000, pl_orbper: 365.25, pl_rade: 1.000 },
-          { pl_name: 'Mars', hostname: 'Sun', pl_orbsmax: 1.524, pl_orbper: 687.0, pl_rade: 0.532 },
-          { pl_name: 'Jupiter', hostname: 'Sun', pl_orbsmax: 5.203, pl_orbper: 4331, pl_rade: 11.209 },
-          { pl_name: 'Saturn', hostname: 'Sun', pl_orbsmax: 9.537, pl_orbper: 10747, pl_rade: 9.449 },
-          { pl_name: 'Uranus', hostname: 'Sun', pl_orbsmax: 15.191, pl_orbper: 30589, pl_rade: 4.007 },
-          { pl_name: 'Neptune', hostname: 'Sun', pl_orbsmax: 20.069, pl_orbper: 59800, pl_rade: 3.883 },
+          { pl_name: 'Mercury', hostname: 'Sun', pl_orbsmax: 2.0, pl_orbper: 88.0, pl_rade: 0.05 },
+          { pl_name: 'Venus', hostname: 'Sun', pl_orbsmax: 3.5, pl_orbper: 224.7, pl_rade: 0.12 },
+          { pl_name: 'Earth', hostname: 'Sun', pl_orbsmax: 5.0, pl_orbper: 365.25, pl_rade: 0.13 },
+          { pl_name: 'Mars', hostname: 'Sun', pl_orbsmax: 7.0, pl_orbper: 687.0, pl_rade: 0.08 },
+          { pl_name: 'Jupiter', hostname: 'Sun', pl_orbsmax: 10.0, pl_orbper: 4331, pl_rade: 12.4 },
+          { pl_name: 'Saturn', hostname: 'Sun', pl_orbsmax: 13.0, pl_orbper: 10747, pl_rade: 1.8 },
+          { pl_name: 'Uranus', hostname: 'Sun', pl_orbsmax: 16.0, pl_orbper: 30589, pl_rade: 1.2 },
+          { pl_name: 'Neptune', hostname: 'Sun', pl_orbsmax: 19.0, pl_orbper: 59800, pl_rade: 1.0 },
         ]
         
         const solarPlanets = solarPlanetsData.map(p => ({

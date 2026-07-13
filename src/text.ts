@@ -18,7 +18,7 @@ export const texts: Record<string, { ru: string; en: string }> = {
   'about.github': { ru: 'github.com/gorohovAv', en: 'github.com/gorohovAv' },
   'about.github.url': { ru: 'https://github.com/gorohovAv', en: 'https://github.com/gorohovAv' },
   'about.description': {
-    ru: 'Fullstack-разработчик широкого профиля с опытом около 4 лет. Работаю с веб-, десктоп- и мобильными приложениями (React Native). Закрываю задачи как на клиенте, так и на сервере. Умею использовать ИИ-инструменты в работе без потери качества результата.',
+    ru: 'Fullstack-разработчик широкого профиля. Работаю с веб-, десктоп- и мобильными приложениями (React Native). Закрываю задачи как на клиенте, так и на сервере. Умею использовать ИИ-инструменты в работе без потери качества результата.',
     en: 'Versatile fullstack developer with ~4 years of experience. I work on web, desktop, and mobile (React Native) applications, handling both client and server sides. I integrate AI tools into my workflow without compromising quality.'
   },
   'about.stack.title': { ru: 'Основной стек', en: 'Core Stack' },
