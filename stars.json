@@ -1,0 +1,939 @@
+{
+  "stars": [
+    {
+      "name": "Alpha Centauri",
+      "constellation": "Centaurus",
+      "distance_ly": 4.37,
+      "stars": [
+        {
+          "name": "Proxima Centauri",
+          "spectral_class": "M5.5Ve",
+          "magnitude": 11.09,
+          "x": -2.99,
+          "y": -1.83,
+          "z": -2.48
+        },
+        {
+          "name": "Rigil Kentaurus A",
+          "spectral_class": "G2V",
+          "magnitude": 0.01,
+          "x": -2.22,
+          "y": -3.69,
+          "z": 1.91
+        },
+        {
+          "name": "Toliman B",
+          "spectral_class": "K1V",
+          "magnitude": 1.34,
+          "x": -2.22,
+          "y": -3.69,
+          "z": 1.91
+        }
+      ],
+      "planets": [
+        {
+          "name": "Proxima Centauri b",
+          "star": "Proxima Centauri",
+          "mass_earth": 1.055,
+          "radius_earth": 1.17,
+          "semi_major_axis_au": 0.0486,
+          "orbital_period_days": 11.19,
+          "discovery_year": 2016,
+          "habitable_zone": true
+        },
+        {
+          "name": "Proxima Centauri d",
+          "star": "Proxima Centauri",
+          "mass_earth": 0.26,
+          "radius_earth": 0.81,
+          "semi_major_axis_au": 0.0289,
+          "orbital_period_days": 5.122,
+          "discovery_year": 2025,
+          "habitable_zone": false
+        }
+      ]
+    },
+    {
+      "name": "Barnard's Star",
+      "constellation": "Ophiuchus",
+      "distance_ly": 5.96,
+      "stars": [
+        {
+          "name": "Barnard's Star",
+          "spectral_class": "M4.0Ve",
+          "magnitude": 9.53,
+          "x": 5.92,
+          "y": -0.65,
+          "z": 0.27
+        }
+      ],
+      "planets": [
+        {
+          "name": "Barnard's Star b",
+          "star": "Barnard's Star",
+          "mass_earth": 0.30,
+          "semi_major_axis_au": 0.0229,
+          "orbital_period_days": 3.154,
+          "discovery_year": 2024,
+          "habitable_zone": false
+        },
+        {
+          "name": "Barnard's Star c",
+          "star": "Barnard's Star",
+          "mass_earth": 0.34,
+          "semi_major_axis_au": 0.0274,
+          "orbital_period_days": 4.124,
+          "discovery_year": 2025,
+          "habitable_zone": false
+        },
+        {
+          "name": "Barnard's Star d",
+          "star": "Barnard's Star",
+          "mass_earth": 0.26,
+          "semi_major_axis_au": 0.0188,
+          "orbital_period_days": 2.340,
+          "discovery_year": 2025,
+          "habitable_zone": false
+        },
+        {
+          "name": "Barnard's Star e",
+          "star": "Barnard's Star",
+          "mass_earth": 0.19,
+          "semi_major_axis_au": 0.0381,
+          "orbital_period_days": 6.739,
+          "discovery_year": 2025,
+          "habitable_zone": false
+        }
+      ]
+    },
+    {
+      "name": "Lalande 21185",
+      "constellation": "Ursa Major",
+      "distance_ly": 8.30,
+      "stars": [
+        {
+          "name": "Lalande 21185",
+          "spectral_class": "M2.0V",
+          "magnitude": 7.47,
+          "x": -5.25,
+          "y": -5.82,
+          "z": -2.91
+        }
+      ],
+      "planets": [
+        {
+          "name": "Lalande 21185 b",
+          "star": "Lalande 21185",
+          "mass_earth": 2.69,
+          "semi_major_axis_au": 0.0788,
+          "orbital_period_days": 12.94,
+          "discovery_year": 2019,
+          "habitable_zone": false
+        },
+        {
+          "name": "Lalande 21185 c",
+          "star": "Lalande 21185",
+          "mass_earth": 13.6,
+          "semi_major_axis_au": 2.94,
+          "orbital_period_days": 2946,
+          "discovery_year": 2021,
+          "habitable_zone": false
+        }
+      ]
+    },
+    {
+      "name": "Epsilon Eridani",
+      "constellation": "Eridanus",
+      "distance_ly": 10.47,
+      "stars": [
+        {
+          "name": "Epsilon Eridani",
+          "spectral_class": "K2V",
+          "magnitude": 3.73,
+          "x": 8.44,
+          "y": -6.11,
+          "z": 1.09
+        }
+      ],
+      "planets": [
+        {
+          "name": "AEgir (Epsilon Eridani b)",
+          "star": "Epsilon Eridani",
+          "mass_earth": 318,
+          "semi_major_axis_au": 3.53,
+          "orbital_period_days": 2680,
+          "discovery_year": 2000,
+          "habitable_zone": false
+        }
+      ]
+    },
+    {
+      "name": "Gliese 887",
+      "constellation": "Piscis Austrinus",
+      "distance_ly": 10.72,
+      "stars": [
+        {
+          "name": "Lacaille 9352",
+          "spectral_class": "M0.5V",
+          "magnitude": 7.34,
+          "x": 8.39,
+          "y": -5.87,
+          "z": -3.59
+        }
+      ],
+      "planets": [
+        {
+          "name": "Gliese 887 b",
+          "star": "Lacaille 9352",
+          "mass_earth": 3.9,
+          "semi_major_axis_au": 0.068,
+          "orbital_period_days": 9.262,
+          "discovery_year": 2019,
+          "habitable_zone": false
+        },
+        {
+          "name": "Gliese 887 c",
+          "star": "Lacaille 9352",
+          "mass_earth": 6.5,
+          "semi_major_axis_au": 0.121,
+          "orbital_period_days": 21.78,
+          "discovery_year": 2019,
+          "habitable_zone": false
+        },
+        {
+          "name": "Gliese 887 d",
+          "star": "Lacaille 9352",
+          "mass_earth": 6.1,
+          "semi_major_axis_au": 0.212,
+          "orbital_period_days": 50.77,
+          "discovery_year": 2026,
+          "habitable_zone": true
+        },
+        {
+          "name": "Gliese 887 e",
+          "star": "Lacaille 9352",
+          "mass_earth": 1.46,
+          "semi_major_axis_au": 0.042,
+          "orbital_period_days": 4.42,
+          "discovery_year": 2026,
+          "habitable_zone": false
+        }
+      ]
+    },
+    {
+      "name": "Ross 128",
+      "constellation": "Virgo",
+      "distance_ly": 11.01,
+      "stars": [
+        {
+          "name": "Ross 128",
+          "spectral_class": "M4.0Vn",
+          "magnitude": 11.13,
+          "x": -2.12,
+          "y": 0.93,
+          "z": 10.77
+        }
+      ],
+      "planets": [
+        {
+          "name": "Ross 128 b",
+          "star": "Ross 128",
+          "mass_earth": 1.40,
+          "semi_major_axis_au": 0.0496,
+          "orbital_period_days": 9.866,
+          "discovery_year": 2017,
+          "habitable_zone": true
+        }
+      ]
+    },
+    {
+      "name": "Gliese 725",
+      "constellation": "Draco",
+      "distance_ly": 11.49,
+      "stars": [
+        {
+          "name": "Struve 2398 A",
+          "spectral_class": "M3.0V",
+          "magnitude": 8.90,
+          "x": -5.33,
+          "y": 8.99,
+          "z": -5.43
+        },
+        {
+          "name": "Struve 2398 B",
+          "spectral_class": "M3.5V",
+          "magnitude": 9.69,
+          "x": -5.33,
+          "y": 8.99,
+          "z": -5.43
+        }
+      ],
+      "planets": [
+        {
+          "name": "Gliese 725 A b",
+          "star": "Struve 2398 A",
+          "mass_earth": 2.78,
+          "semi_major_axis_au": 0.068,
+          "orbital_period_days": 11.2201,
+          "discovery_year": 2024,
+          "habitable_zone": false
+        },
+        {
+          "name": "Gliese 725 B c",
+          "star": "Struve 2398 B",
+          "mass_earth": 3.4,
+          "semi_major_axis_au": 0.139,
+          "orbital_period_days": 37.9,
+          "discovery_year": 2025,
+          "habitable_zone": true
+        }
+      ]
+    },
+    {
+      "name": "Groombridge 34",
+      "constellation": "Andromeda",
+      "distance_ly": 11.62,
+      "stars": [
+        {
+          "name": "GX Andromedae A",
+          "spectral_class": "M1.5V",
+          "magnitude": 8.08,
+          "x": -8.43,
+          "y": -6.93,
+          "z": 4.16
+        },
+        {
+          "name": "GQ Andromedae B",
+          "spectral_class": "M3.5V",
+          "magnitude": 11.06,
+          "x": -8.43,
+          "y": -6.93,
+          "z": 4.16
+        }
+      ],
+      "planets": [
+        {
+          "name": "Groombridge 34 A b",
+          "star": "GX Andromedae A",
+          "mass_earth": 3.03,
+          "semi_major_axis_au": 0.072,
+          "orbital_period_days": 11.44,
+          "discovery_year": 2014,
+          "habitable_zone": false
+        },
+        {
+          "name": "Groombridge 34 A c",
+          "star": "GX Andromedae A",
+          "mass_earth": 36,
+          "semi_major_axis_au": 5.4,
+          "orbital_period_days": 7600,
+          "discovery_year": 2018,
+          "habitable_zone": false
+        }
+      ]
+    },
+    {
+      "name": "Epsilon Indi",
+      "constellation": "Indus",
+      "distance_ly": 11.87,
+      "stars": [
+        {
+          "name": "Epsilon Indi A",
+          "spectral_class": "K5Ve",
+          "magnitude": 4.69,
+          "x": 10.50,
+          "y": -4.86,
+          "z": 2.96
+        },
+        {
+          "name": "Epsilon Indi Ba",
+          "spectral_class": "T1.0V",
+          "magnitude": 12.30,
+          "x": 10.50,
+          "y": -4.86,
+          "z": 2.96
+        },
+        {
+          "name": "Epsilon Indi Bb",
+          "spectral_class": "T6.0V",
+          "magnitude": 13.20,
+          "x": 10.50,
+          "y": -4.86,
+          "z": 2.96
+        }
+      ],
+      "planets": [
+        {
+          "name": "Epsilon Indi A b",
+          "star": "Epsilon Indi A",
+          "mass_earth": 2005,
+          "semi_major_axis_au": 28.4,
+          "orbital_period_days": 63400,
+          "discovery_year": 2018,
+          "habitable_zone": false,
+          "notes": "непосредственно наблюдаемая планета"
+        }
+      ]
+    },
+    {
+      "name": "GJ 1061",
+      "constellation": "Horologium",
+      "distance_ly": 11.98,
+      "stars": [
+        {
+          "name": "GJ 1061",
+          "spectral_class": "M5.5V",
+          "magnitude": 13.09,
+          "x": -7.80,
+          "y": -8.33,
+          "z": -4.70
+        }
+      ],
+      "planets": [
+        {
+          "name": "GJ 1061 b",
+          "star": "GJ 1061",
+          "mass_earth": 1.37,
+          "semi_major_axis_au": 0.021,
+          "orbital_period_days": 3.204,
+          "discovery_year": 2019,
+          "habitable_zone": false
+        },
+        {
+          "name": "GJ 1061 c",
+          "star": "GJ 1061",
+          "mass_earth": 1.74,
+          "semi_major_axis_au": 0.035,
+          "orbital_period_days": 6.689,
+          "discovery_year": 2019,
+          "habitable_zone": true
+        },
+        {
+          "name": "GJ 1061 d",
+          "star": "GJ 1061",
+          "mass_earth": 1.64,
+          "semi_major_axis_au": 0.054,
+          "orbital_period_days": 13.03,
+          "discovery_year": 2019,
+          "habitable_zone": true
+        }
+      ]
+    },
+    {
+      "name": "YZ Ceti",
+      "constellation": "Cetus",
+      "distance_ly": 12.12,
+      "stars": [
+        {
+          "name": "YZ Ceti",
+          "spectral_class": "M4.5V",
+          "magnitude": 12.02,
+          "x": -10.96,
+          "y": -4.81,
+          "z": -2.03
+        }
+      ],
+      "planets": [
+        {
+          "name": "YZ Ceti b",
+          "star": "YZ Ceti",
+          "mass_earth": 0.70,
+          "semi_major_axis_au": 0.0163,
+          "orbital_period_days": 2.021,
+          "discovery_year": 2017,
+          "habitable_zone": false
+        },
+        {
+          "name": "YZ Ceti c",
+          "star": "YZ Ceti",
+          "mass_earth": 1.14,
+          "semi_major_axis_au": 0.0216,
+          "orbital_period_days": 3.060,
+          "discovery_year": 2017,
+          "habitable_zone": false
+        },
+        {
+          "name": "YZ Ceti d",
+          "star": "YZ Ceti",
+          "mass_earth": 1.09,
+          "semi_major_axis_au": 0.0285,
+          "orbital_period_days": 4.656,
+          "discovery_year": 2017,
+          "habitable_zone": false
+        }
+      ]
+    },
+    {
+      "name": "Luyten's Star",
+      "constellation": "Canis Minor",
+      "distance_ly": 12.35,
+      "stars": [
+        {
+          "name": "Luyten's Star",
+          "spectral_class": "M3.5Vn",
+          "magnitude": 9.86,
+          "x": -10.73,
+          "y": -6.10,
+          "z": -0.60
+        }
+      ],
+      "planets": [
+        {
+          "name": "Luyten's Star b",
+          "star": "Luyten's Star",
+          "mass_earth": 2.89,
+          "semi_major_axis_au": 0.0911,
+          "orbital_period_days": 18.65,
+          "discovery_year": 2017,
+          "habitable_zone": true
+        },
+        {
+          "name": "Luyten's Star c",
+          "star": "Luyten's Star",
+          "mass_earth": 1.18,
+          "semi_major_axis_au": 0.0365,
+          "orbital_period_days": 4.723,
+          "discovery_year": 2017,
+          "habitable_zone": false
+        }
+      ]
+    },
+    {
+      "name": "Teegarden's Star",
+      "constellation": "Aries",
+      "distance_ly": 12.50,
+      "stars": [
+        {
+          "name": "Teegarden's Star",
+          "spectral_class": "M6.5V",
+          "magnitude": 15.14,
+          "x": -6.79,
+          "y": -5.99,
+          "z": 8.69
+        }
+      ],
+      "planets": [
+        {
+          "name": "Teegarden's Star b",
+          "star": "Teegarden's Star",
+          "mass_earth": 1.16,
+          "semi_major_axis_au": 0.0259,
+          "orbital_period_days": 4.906,
+          "discovery_year": 2019,
+          "habitable_zone": true
+        },
+        {
+          "name": "Teegarden's Star c",
+          "star": "Teegarden's Star",
+          "mass_earth": 1.05,
+          "semi_major_axis_au": 0.0455,
+          "orbital_period_days": 11.42,
+          "discovery_year": 2019,
+          "habitable_zone": true
+        },
+        {
+          "name": "Teegarden's Star d",
+          "star": "Teegarden's Star",
+          "mass_earth": 0.82,
+          "semi_major_axis_au": 0.0791,
+          "orbital_period_days": 26.13,
+          "discovery_year": 2024,
+          "habitable_zone": false
+        }
+      ]
+    },
+    {
+      "name": "Wolf 1061",
+      "constellation": "Ophiuchus",
+      "distance_ly": 14.05,
+      "stars": [
+        {
+          "name": "Wolf 1061",
+          "spectral_class": "M3.0V",
+          "magnitude": 10.07,
+          "x": 9.78,
+          "y": -8.45,
+          "z": -5.62
+        }
+      ],
+      "planets": [
+        {
+          "name": "Wolf 1061 b",
+          "star": "Wolf 1061",
+          "mass_earth": 1.91,
+          "semi_major_axis_au": 0.0375,
+          "orbital_period_days": 4.887,
+          "discovery_year": 2015,
+          "habitable_zone": false
+        },
+        {
+          "name": "Wolf 1061 c",
+          "star": "Wolf 1061",
+          "mass_earth": 3.41,
+          "semi_major_axis_au": 0.0890,
+          "orbital_period_days": 17.87,
+          "discovery_year": 2015,
+          "habitable_zone": true
+        },
+        {
+          "name": "Wolf 1061 d",
+          "star": "Wolf 1061",
+          "mass_earth": 7.7,
+          "semi_major_axis_au": 0.470,
+          "orbital_period_days": 217,
+          "discovery_year": 2015,
+          "habitable_zone": false
+        }
+      ]
+    },
+    {
+      "name": "TZ Arietis",
+      "constellation": "Aries",
+      "distance_ly": 14.58,
+      "stars": [
+        {
+          "name": "TZ Arietis",
+          "spectral_class": "M4.5V",
+          "magnitude": 12.27,
+          "x": -7.94,
+          "y": -11.52,
+          "z": 4.81
+        }
+      ],
+      "planets": [
+        {
+          "name": "TZ Arietis b",
+          "star": "TZ Arietis",
+          "mass_earth": 67,
+          "semi_major_axis_au": 0.88,
+          "orbital_period_days": 771,
+          "discovery_year": 2019,
+          "habitable_zone": false
+        }
+      ]
+    },
+    {
+      "name": "Gliese 687",
+      "constellation": "Draco",
+      "distance_ly": 14.84,
+      "stars": [
+        {
+          "name": "Gliese 687",
+          "spectral_class": "M3.0V",
+          "magnitude": 9.17,
+          "x": -6.89,
+          "y": 5.49,
+          "z": -11.93
+        }
+      ],
+      "planets": [
+        {
+          "name": "Gliese 687 b",
+          "star": "Gliese 687",
+          "mass_earth": 17.2,
+          "semi_major_axis_au": 0.163,
+          "orbital_period_days": 38.14,
+          "discovery_year": 2014,
+          "habitable_zone": false
+        },
+        {
+          "name": "Gliese 687 c",
+          "star": "Gliese 687",
+          "mass_earth": 16.0,
+          "semi_major_axis_au": 1.165,
+          "orbital_period_days": 728,
+          "discovery_year": 2019,
+          "habitable_zone": false
+        }
+      ]
+    },
+    {
+      "name": "Gliese 674",
+      "constellation": "Ara",
+      "distance_ly": 14.85,
+      "stars": [
+        {
+          "name": "Gliese 674",
+          "spectral_class": "M3.0V",
+          "magnitude": 9.38,
+          "x": 8.24,
+          "y": -9.14,
+          "z": -8.53
+        }
+      ],
+      "planets": [
+        {
+          "name": "Gliese 674 b",
+          "star": "Gliese 674",
+          "mass_earth": 11.1,
+          "semi_major_axis_au": 0.039,
+          "orbital_period_days": 4.694,
+          "discovery_year": 2007,
+          "habitable_zone": false
+        }
+      ]
+    },
+    {
+      "name": "Gliese 876",
+      "constellation": "Aquarius",
+      "distance_ly": 15.24,
+      "stars": [
+        {
+          "name": "Gliese 876",
+          "spectral_class": "M3.5V",
+          "magnitude": 10.17,
+          "x": -10.62,
+          "y": -8.02,
+          "z": -6.54
+        }
+      ],
+      "planets": [
+        {
+          "name": "Gliese 876 b",
+          "star": "Gliese 876",
+          "mass_earth": 749,
+          "semi_major_axis_au": 0.2098,
+          "orbital_period_days": 61.10,
+          "discovery_year": 1998,
+          "habitable_zone": false
+        },
+        {
+          "name": "Gliese 876 c",
+          "star": "Gliese 876",
+          "mass_earth": 235,
+          "semi_major_axis_au": 0.1309,
+          "orbital_period_days": 30.10,
+          "discovery_year": 2000,
+          "habitable_zone": false
+        },
+        {
+          "name": "Gliese 876 d",
+          "star": "Gliese 876",
+          "mass_earth": 6.68,
+          "semi_major_axis_au": 0.0210,
+          "orbital_period_days": 1.938,
+          "discovery_year": 2005,
+          "habitable_zone": false
+        },
+        {
+          "name": "Gliese 876 e",
+          "star": "Gliese 876",
+          "mass_earth": 16,
+          "semi_major_axis_au": 0.3355,
+          "orbital_period_days": 123.6,
+          "discovery_year": 2010,
+          "habitable_zone": false
+        }
+      ]
+    },
+    {
+      "name": "GJ 1002",
+      "constellation": "Cetus",
+      "distance_ly": 15.81,
+      "stars": [
+        {
+          "name": "GJ 1002",
+          "spectral_class": "M5.5V",
+          "magnitude": 13.76,
+          "x": -11.57,
+          "y": -9.17,
+          "z": -5.34
+        }
+      ],
+      "planets": [
+        {
+          "name": "GJ 1002 b",
+          "star": "GJ 1002",
+          "mass_earth": 1.08,
+          "semi_major_axis_au": 0.0457,
+          "orbital_period_days": 10.35,
+          "discovery_year": 2022,
+          "habitable_zone": true
+        },
+        {
+          "name": "GJ 1002 c",
+          "star": "GJ 1002",
+          "mass_earth": 1.36,
+          "semi_major_axis_au": 0.0738,
+          "orbital_period_days": 21.2,
+          "discovery_year": 2022,
+          "habitable_zone": true
+        }
+      ]
+    },
+    {
+      "name": "Gliese 832",
+      "constellation": "Grus",
+      "distance_ly": 16.20,
+      "stars": [
+        {
+          "name": "Gliese 832",
+          "spectral_class": "M1.5V",
+          "magnitude": 8.66,
+          "x": 7.07,
+          "y": -12.50,
+          "z": -8.20
+        }
+      ],
+      "planets": [
+        {
+          "name": "Gliese 832 b",
+          "star": "Gliese 832",
+          "mass_earth": 315,
+          "semi_major_axis_au": 3.7,
+          "orbital_period_days": 3853,
+          "discovery_year": 2008,
+          "habitable_zone": false
+        }
+      ]
+    },
+    {
+      "name": "GJ 3323",
+      "constellation": "Eridanus",
+      "distance_ly": 17.53,
+      "stars": [
+        {
+          "name": "GJ 3323",
+          "spectral_class": "M4V",
+          "magnitude": 12.22,
+          "x": 3.52,
+          "y": -17.10,
+          "z": -2.82
+        }
+      ],
+      "planets": [
+        {
+          "name": "GJ 3323 b",
+          "star": "GJ 3323",
+          "mass_earth": 2.0,
+          "semi_major_axis_au": 0.0328,
+          "orbital_period_days": 5.36,
+          "discovery_year": 2017,
+          "habitable_zone": false
+        },
+        {
+          "name": "GJ 3323 c",
+          "star": "GJ 3323",
+          "mass_earth": 2.3,
+          "semi_major_axis_au": 0.126,
+          "orbital_period_days": 40.5,
+          "discovery_year": 2017,
+          "habitable_zone": false
+        }
+      ]
+    },
+    {
+      "name": "Gliese 251",
+      "constellation": "Gemini",
+      "distance_ly": 18.21,
+      "stars": [
+        {
+          "name": "Gliese 251",
+          "spectral_class": "M3V",
+          "magnitude": 10.02,
+          "x": -5.63,
+          "y": 7.51,
+          "z": -15.60
+        }
+      ],
+      "planets": [
+        {
+          "name": "Gliese 251 b",
+          "star": "Gliese 251",
+          "mass_earth": 3.85,
+          "semi_major_axis_au": 0.0808,
+          "orbital_period_days": 14.2370,
+          "discovery_year": 2020,
+          "habitable_zone": false
+        },
+        {
+          "name": "Gliese 251 c",
+          "star": "Gliese 251",
+          "mass_earth": 3.84,
+          "semi_major_axis_au": 0.196,
+          "orbital_period_days": 53.647,
+          "discovery_year": 2025,
+          "habitable_zone": false
+        }
+      ]
+    },
+    {
+      "name": "Gliese 752",
+      "constellation": "Aquila",
+      "distance_ly": 19.29,
+      "stars": [
+        {
+          "name": "Gliese 752 A",
+          "spectral_class": "M2.5V",
+          "magnitude": 9.10,
+          "x": -13.96,
+          "y": 8.15,
+          "z": -10.91
+        },
+        {
+          "name": "Gliese 752 B",
+          "spectral_class": "M8V",
+          "magnitude": 17.45,
+          "x": -13.96,
+          "y": 8.15,
+          "z": -10.91
+        }
+      ],
+      "planets": [
+        {
+          "name": "Gliese 752 A b",
+          "star": "Gliese 752 A",
+          "mass_earth": 12.2,
+          "semi_major_axis_au": 0.343,
+          "orbital_period_days": 106,
+          "discovery_year": 2018,
+          "habitable_zone": false
+        }
+      ]
+    },
+    {
+      "name": "82 G. Eridani",
+      "constellation": "Eridanus",
+      "distance_ly": 19.70,
+      "stars": [
+        {
+          "name": "82 G. Eridani",
+          "spectral_class": "G8V",
+          "magnitude": 4.26,
+          "x": -5.82,
+          "y": -18.79,
+          "z": 1.63
+        }
+      ],
+      "planets": [
+        {
+          "name": "82 G. Eridani b",
+          "star": "82 G. Eridani",
+          "mass_earth": 2.15,
+          "semi_major_axis_au": 0.126,
+          "orbital_period_days": 18.3,
+          "discovery_year": 2011,
+          "habitable_zone": false
+        },
+        {
+          "name": "82 G. Eridani c",
+          "star": "82 G. Eridani",
+          "mass_earth": 2.98,
+          "semi_major_axis_au": 0.363,
+          "orbital_period_days": 89.7,
+          "discovery_year": 2011,
+          "habitable_zone": false
+        },
+        {
+          "name": "82 G. Eridani d",
+          "star": "82 G. Eridani",
+          "mass_earth": 5.82,
+          "semi_major_axis_au": 1.354,
+          "orbital_period_days": 648,
+          "discovery_year": 2023,
+          "habitable_zone": true
+        }
+      ]
+    }
+  ]
+}
