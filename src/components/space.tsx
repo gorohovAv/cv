@@ -231,8 +231,15 @@ export default function Space() {
       try {
         setLoading(true, 0, 'Loading star catalog')
         
+        // Используем BASE_URL для корректного разрешения путей как в dev, так и в prod (GitHub Pages)
+        const baseUrl = import.meta.env.BASE_URL
+        
         // Load HYG star catalog
-        const hygResponse = await fetch('/hyg_v42.csv')
+        const hygUrl = `${baseUrl}hyg_v42.csv`
+        const hygResponse = await fetch(hygUrl)
+        if (!hygResponse.ok) {
+          throw new Error(`Failed to fetch star catalog: ${hygResponse.status} ${hygResponse.statusText} at ${hygUrl}`)
+        }
         const hygText = await hygResponse.text()
         setLoading(true, 30, 'Parsing star catalog')
         
@@ -240,7 +247,11 @@ export default function Space() {
         setLoading(true, 50, 'Loading exoplanet database')
         
         // Load NASA exoplanet database
-        const nasaResponse = await fetch('/PS_2026.07.09_23.35.24.csv')
+        const nasaUrl = `${baseUrl}PS_2026.07.09_23.35.24.csv`
+        const nasaResponse = await fetch(nasaUrl)
+        if (!nasaResponse.ok) {
+          throw new Error(`Failed to fetch exoplanet database: ${nasaResponse.status} ${nasaResponse.statusText} at ${nasaUrl}`)
+        }
         const nasaText = await nasaResponse.text()
         setLoading(true, 80, 'Parsing exoplanet database')
         
@@ -330,7 +341,7 @@ export default function Space() {
         
       } catch (error) {
         console.error('Failed to load data:', error)
-        setLoading(false, 0, '')
+        setLoading(false, 0, 'Ошибка загрузки данных. Проверьте консоль.')
       }
     }
     

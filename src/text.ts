@@ -33,8 +33,8 @@ export const texts: Record<string, TextItem | TextItem[]> = {
   },
   'about.stack.extra.title': { ru: 'Также работал с', en: 'Also worked with' },
   'about.stack.extra': {
-    ru: 'Rust, Python, Django, FastAPI, NestJS, Next.js, Redux Toolkit, Helix Editor, Electron, Docker, Prisma, BEM',
-    en: 'Rust, Python, Django, FastAPI, NestJS, Next.js, Redux Toolkit, Helix Editor, Electron, Docker, Prisma, BEM'
+    ru: 'Rust, Python, Django, FastAPI, NestJS, Next.js, Redux Toolkit, Helix, Electron, Docker, Prisma, BEM',
+    en: 'Rust, Python, Django, FastAPI, NestJS, Next.js, Redux Toolkit, Helix, Electron, Docker, Prisma, BEM'
   },
 
   // Education
