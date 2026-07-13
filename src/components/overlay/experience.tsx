@@ -1,5 +1,5 @@
 import { useStore } from '../../store/store'
-import { texts } from '../../text'
+import { getText, texts } from '../../text'
 
 interface Bullet {
   ru: string
@@ -8,7 +8,7 @@ interface Bullet {
 
 export default function Experience() {
   const language = useStore(s => s.language)
-  const t = (key: string) => texts[key]?.[language] ?? key
+  const t = (key: string) => getText(key, language)
 
   const job1Bullets = texts['experience.job1.bullets'] as unknown as Bullet[]
   const job2Bullets = texts['experience.job2.bullets'] as unknown as Bullet[]

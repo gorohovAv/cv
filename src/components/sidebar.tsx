@@ -1,9 +1,9 @@
 import './sidebar.css'
 import { useStore } from '../store/store'
-import { texts } from '../text'
+import { getText } from '../text'
 
 function t(key: string, lang: 'ru' | 'en'): string {
-  return texts[key]?.[lang] ?? key
+  return getText(key, lang)
 }
 
 export default function Sidebar() {

@@ -2,7 +2,7 @@
 import { useRef, useEffect, useState } from 'react'
 import './system.css'
 import { useStore } from '../store/store'
-import { texts } from '../text'
+import { getText } from '../text'
 import { type PlanetData } from '../csvParser'
 
 interface Planet {
@@ -338,7 +338,7 @@ export default function System() {
           <div className="system-header">
             <span className="system-star-name">{selectedStar.name}</span>
             <span className="system-planet-count">
-              {planets.length} {texts['system.planets'][language]}
+              {planets.length} {getText('system.planets', language)}
             </span>
           </div>
           <canvas ref={canvasRef} className="system-canvas" />
@@ -350,7 +350,7 @@ export default function System() {
             <circle cx="12" cy="12" r="8" strokeDasharray="4 2" />
             <circle cx="12" cy="12" r="11" strokeDasharray="2 3" />
           </svg>
-          <span>{texts['system.empty'][language]}</span>
+          <span>{getText('system.empty', language)}</span>
         </div>
       )}
     </div>

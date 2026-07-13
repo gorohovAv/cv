@@ -203,3 +203,12 @@ export const texts: Record<string, TextItem | TextItem[]> = {
 }
 
 export type TextKey = keyof typeof texts
+
+// Безопасная функция для получения текста, исключающая ошибку типизации с массивами
+export function getText(key: string, lang: 'ru' | 'en'): string {
+  const item = texts[key];
+  if (item && !Array.isArray(item)) {
+    return item[lang] ?? key;
+  }
+  return key;
+}

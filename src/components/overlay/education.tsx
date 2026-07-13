@@ -1,9 +1,9 @@
 import { useStore } from '../../store/store'
-import { texts } from '../../text'
+import { getText } from '../../text'
 
 export default function Education() {
   const language = useStore(s => s.language)
-  const t = (key: string) => texts[key]?.[language] ?? key
+  const t = (key: string) => getText(key, language)
 
   return (
     <div className="overlay-section education-section">
