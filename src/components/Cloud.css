@@ -1,0 +1,83 @@
+.skill-cloud-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.skill-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 170, 0, 0.1);
+  border-radius: 12px;
+  min-height: 120px;
+}
+
+.skill-item {
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid transparent;
+}
+
+.skill-item:hover {
+  background: rgba(255, 170, 0, 0.15);
+  color: #ffaa00;
+  border-color: rgba(255, 170, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+/* 5 размеров облака */
+.size-1 { font-size: 0.85rem; opacity: 0.6; }
+.size-2 { font-size: 1rem; opacity: 0.75; }
+.size-3 { font-size: 1.15rem; opacity: 0.85; }
+.size-4 { font-size: 1.35rem; opacity: 0.95; }
+.size-5 { 
+  font-size: 1.6rem; 
+  opacity: 1; 
+  font-weight: 600; 
+  color: rgba(255, 170, 0, 0.9);
+}
+
+.skill-description {
+  min-height: 60px;
+  padding: 16px;
+  background: rgba(255, 170, 0, 0.05);
+  border: 1px solid rgba(255, 170, 0, 0.15);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.skill-description p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.skill-description .placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+}
+
+.skill-size-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #ffaa00;
+  background: rgba(255, 170, 0, 0.15);
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}

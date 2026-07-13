@@ -3,7 +3,7 @@ import { create } from 'zustand'
 import type { StarData, PlanetData } from '../csvParser'
 
 export type Language = 'ru' | 'en'
-export type OverlayType = 'about' | 'education' | 'experience' | 'projects' | null
+export type OverlayType = 'about' | 'education' | 'experience' | 'projects' | 'skills' | 'contacts' | 'license' | null
 
 export interface StarSystemData {
   id: number
@@ -32,13 +32,11 @@ interface AppState {
   hoveredPlanet: PlanetData | null
   setHoveredPlanet: (planet: PlanetData | null) => void
   
-  // Data arrays
   stars: StarData[]
   setStars: (stars: StarData[]) => void
   planets: PlanetData[]
   setPlanets: (planets: PlanetData[]) => void
   
-  // Loading state
   isLoading: boolean
   loadingProgress: number
   loadingText: string

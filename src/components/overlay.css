@@ -13,9 +13,9 @@
   width: 420px;
   max-width: 90%;
   height: 100%;
-  background: rgba(10, 10, 20, 0.92);
+  background: rgba(15, 12, 5, 0.85);
   backdrop-filter: blur(20px);
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  border-right: 1px solid rgba(255, 170, 0, 0.15);
   display: flex;
   flex-direction: column;
   animation: slideIn 0.3s ease;
@@ -27,7 +27,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 24px 28px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 170, 0, 0.1);
 }
 
 .overlay-header h2 {
@@ -42,8 +42,8 @@
   height: 36px;
   border: none;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 170, 0, 0.1);
+  color: rgba(255, 170, 0, 0.8);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -57,8 +57,8 @@
 }
 
 .overlay-close:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
+  background: rgba(255, 170, 0, 0.2);
+  color: #ffaa00;
 }
 
 .overlay-content {
@@ -91,7 +91,7 @@
     width: 100%;
     max-width: 100%;
     border-right: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid rgba(255, 170, 0, 0.15);
   }
 
   .overlay-header {
@@ -131,14 +131,15 @@
 
 .about-role {
   font-size: 14px;
-  color: rgba(100, 160, 255, 0.9);
+  color: rgba(255, 170, 0, 0.9);
   font-weight: 500;
 }
 
-.about-location,
-.about-email {
+.about-meta {
   font-size: 13px;
   color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  gap: 16px;
 }
 
 .about-description {
@@ -149,12 +150,50 @@
   text-align: left;
 }
 
+.about-stack-block {
+  width: 100%;
+  text-align: left;
+  margin-top: 16px;
+}
+
+.about-stack-title {
+  font-size: 13px;
+  color: rgba(255, 170, 0, 0.8);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.about-stack-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.chip-primary {
+  background: rgba(255, 170, 0, 0.12);
+  color: rgba(255, 170, 0, 0.9);
+  border: 1px solid rgba(255, 170, 0, 0.2);
+}
+
+.chip-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 /* Timeline */
 .timeline-item {
   position: relative;
   padding-left: 28px;
   padding-bottom: 28px;
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 1px solid rgba(255, 170, 0, 0.15);
   margin-left: 6px;
 }
 
@@ -170,8 +209,13 @@
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: rgba(100, 140, 255, 0.8);
-  box-shadow: 0 0 8px rgba(100, 140, 255, 0.5);
+  background: rgba(255, 170, 0, 0.8);
+  box-shadow: 0 0 8px rgba(255, 170, 0, 0.4);
+}
+
+.timeline-dot-current {
+  background: #ffaa00;
+  box-shadow: 0 0 10px rgba(255, 170, 0, 0.6);
 }
 
 .timeline-content h4 {
@@ -183,7 +227,7 @@
 
 .timeline-year {
   font-size: 12px;
-  color: rgba(100, 160, 255, 0.8);
+  color: rgba(255, 170, 0, 0.8);
   font-weight: 500;
 }
 
@@ -200,10 +244,49 @@
   color: rgba(255, 255, 255, 0.55);
 }
 
+.timeline-bullets {
+  margin: 8px 0 0 0;
+  padding-left: 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.timeline-bullets li {
+  margin-bottom: 4px;
+}
+
+.timeline-divider {
+  margin: 16px 0;
+  padding: 8px 0;
+  border-top: 1px solid rgba(255, 170, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 170, 0, 0.1);
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255, 170, 0, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.timeline-total {
+  margin-bottom: 24px;
+  padding: 12px;
+  background: rgba(255, 170, 0, 0.08);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 170, 0, 0.15);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.timeline-total strong {
+  color: #ffaa00;
+  margin-left: 8px;
+}
+
 /* Projects */
 .project-card {
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 170, 0, 0.1);
   border-radius: 12px;
   padding: 18px;
   margin-bottom: 16px;
@@ -211,8 +294,8 @@
 }
 
 .project-card:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(100, 140, 255, 0.2);
+  background: rgba(255, 170, 0, 0.06);
+  border-color: rgba(255, 170, 0, 0.25);
 }
 
 .project-card h4 {
@@ -229,6 +312,32 @@
   margin-bottom: 12px;
 }
 
+.project-links {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.project-link {
+  font-size: 12px;
+  color: rgba(255, 170, 0, 0.9);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s;
+}
+
+.project-link:hover {
+  color: #ffaa00;
+  text-decoration: underline;
+}
+
+.project-link svg {
+  width: 14px;
+  height: 14px;
+}
+
 .project-tags {
   display: flex;
   flex-wrap: wrap;
@@ -239,7 +348,73 @@
   font-size: 11px;
   padding: 3px 10px;
   border-radius: 20px;
-  background: rgba(100, 140, 255, 0.12);
-  color: rgba(100, 160, 255, 0.9);
-  border: 1px solid rgba(100, 140, 255, 0.15);
+  background: rgba(255, 170, 0, 0.12);
+  color: rgba(255, 170, 0, 0.9);
+  border: 1px solid rgba(255, 170, 0, 0.2);
+}
+
+/* Contacts */
+.contacts-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-label {
+  font-size: 12px;
+  color: rgba(255, 170, 0, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.contact-link {
+  font-size: 15px;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 170, 0, 0.1);
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.contact-link:hover {
+  background: rgba(255, 170, 0, 0.08);
+  border-color: rgba(255, 170, 0, 0.3);
+  color: #ffaa00;
+}
+
+/* License */
+.license-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.license-block {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 170, 0, 0.1);
+  border-radius: 8px;
+}
+
+.license-block h4 {
+  font-size: 14px;
+  color: rgba(255, 170, 0, 0.9);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.license-block p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.65);
 }

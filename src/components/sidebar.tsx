@@ -16,7 +16,7 @@ export default function Sidebar() {
     setLanguage(language === 'ru' ? 'en' : 'ru')
   }
 
-  const handleIconClick = (type: 'about' | 'education' | 'experience' | 'projects') => {
+  const handleIconClick = (type: 'about' | 'education' | 'experience' | 'projects' | 'skills' | 'contacts' | 'license') => {
     if (activeOverlay === type) {
       setActiveOverlay(null)
     } else {
@@ -69,6 +69,39 @@ export default function Sidebar() {
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M3 3h7l2 2h9v14a2 2 0 01-2 2H5a2 2 0 01-2-2V3z" />
+          </svg>
+        </button>
+
+        <button
+          className={`sidebar-icon ${activeOverlay === 'skills' ? 'active' : ''}`}
+          onClick={() => handleIconClick('skills')}
+          title={t('sidebar.skills', language)}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+            <path d="M2 17l10 5 10-5" />
+            <path d="M2 12l10 5 10-5" />
+          </svg>
+        </button>
+
+        <button
+          className={`sidebar-icon ${activeOverlay === 'contacts' ? 'active' : ''}`}
+          onClick={() => handleIconClick('contacts')}
+          title={t('sidebar.contacts', language)}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" />
+          </svg>
+        </button>
+
+        <button
+          className={`sidebar-icon ${activeOverlay === 'license' ? 'active' : ''}`}
+          onClick={() => handleIconClick('license')}
+          title={t('sidebar.license', language)}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
           </svg>
         </button>
       </div>

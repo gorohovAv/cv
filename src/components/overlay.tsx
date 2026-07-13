@@ -5,6 +5,9 @@ import About from './overlay/about'
 import Education from './overlay/education'
 import Experience from './overlay/experience'
 import Projects from './overlay/projects'
+import Skills from './overlay/skills'
+import Contacts from './overlay/contacts'
+import License from './overlay/license'
 
 export default function Overlay() {
   const activeOverlay = useStore(s => s.activeOverlay)
@@ -19,6 +22,9 @@ export default function Overlay() {
       case 'education': return <Education />
       case 'experience': return <Experience />
       case 'projects': return <Projects />
+      case 'skills': return <Skills />
+      case 'contacts': return <Contacts />
+      case 'license': return <License />
       default: return null
     }
   }
