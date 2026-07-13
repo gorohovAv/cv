@@ -268,7 +268,7 @@ export default function Space() {
           { pl_name: 'Venus', hostname: 'Sun', pl_orbsmax: 3.5, pl_orbper: 224.7, pl_rade: 0.12 },
           { pl_name: 'Earth', hostname: 'Sun', pl_orbsmax: 5.0, pl_orbper: 365.25, pl_rade: 0.13 },
           { pl_name: 'Mars', hostname: 'Sun', pl_orbsmax: 7.0, pl_orbper: 687.0, pl_rade: 0.08 },
-          { pl_name: 'Jupiter', hostname: 'Sun', pl_orbsmax: 10.0, pl_orbper: 4331, pl_rade: 12.4 },
+          { pl_name: 'Jupiter', hostname: 'Sun', pl_orbsmax: 10.0, pl_orbper: 4331, pl_rade: 2.4 },
           { pl_name: 'Saturn', hostname: 'Sun', pl_orbsmax: 13.0, pl_orbper: 10747, pl_rade: 1.8 },
           { pl_name: 'Uranus', hostname: 'Sun', pl_orbsmax: 16.0, pl_orbper: 30589, pl_rade: 1.2 },
           { pl_name: 'Neptune', hostname: 'Sun', pl_orbsmax: 19.0, pl_orbper: 59800, pl_rade: 1.0 },
@@ -321,11 +321,12 @@ export default function Space() {
         
         setLoading(true, 100, 'Initializing space')
         
-        // Small delay to show 100% progress
+        // Увеличенная задержка позволяет Canvas и WebGL полностью инициализироваться в фоне,
+        // пока пользователь видит лоадер. Это полностью устраняет "мигание" пустого экрана.
         setTimeout(() => {
           setLoading(false, 0, '')
           setDataLoaded(true)
-        }, 500)
+        }, 2500)
         
       } catch (error) {
         console.error('Failed to load data:', error)
@@ -336,23 +337,25 @@ export default function Space() {
     loadData()
   }, [dataLoaded, setStars, setPlanets, setLoading])
 
-  if (isLoading) {
-    return <Loader progress={loadingProgress} text={loadingText} />
-  }
-
   return (
-    <div className="space-container">
-      <Canvas
-        camera={{ position: [0, 0, 80], fov: 60 }}
-        gl={{ antialias: true, alpha: false }}
-      >
-        <color attach="background" args={['#000008']} />
-        <fog attach="fog" args={['#000008', 100, 300]} />
-        <SpaceScene />
-      </Canvas>
-      {/* Hover компоненты вынесены из Canvas для правильного позиционирования */}
-      <StarHover />
-      <PlanetHover />
-    </div>
+    <>
+      {/* Canvas рендерится всегда, чтобы инициализация WebGL происходила в фоне под лоадером */}
+      <div className="space-container">
+        <Canvas
+          camera={{ position: [0, 0, 80], fov: 60 }}
+          gl={{ antialias: true, alpha: false }}
+        >
+          <color attach="background" args={['#000008']} />
+          <fog attach="fog" args={['#000008', 100, 300]} />
+          <SpaceScene />
+        </Canvas>
+        {/* Hover компоненты вынесены из Canvas для правильного позиционирования */}
+        <StarHover />
+        <PlanetHover />
+      </div>
+      
+      {/* Лоадер отображается поверх Canvas, пока идет загрузка */}
+      {isLoading && <Loader progress={loadingProgress} text={loadingText} />}
+    </>
   )
 }
