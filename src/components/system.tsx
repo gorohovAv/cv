@@ -274,7 +274,8 @@ export default function System() {
       let closestPlanet: Planet | null = null
       let minDist = Infinity
       
-      planets.forEach(planet => {
+      // Используем for...of вместо forEach для корректного сужения типов в TypeScript
+      for (const planet of planets) {
         const distance = safeNumber(planet.distance, 0)
         const radius = safeNumber(planet.radius, 3)
         const angle = safeNumber(planet.angle, 0)
@@ -287,7 +288,7 @@ export default function System() {
           minDist = dist
           closestPlanet = planet
         }
-      })
+      }
       
       if (closestPlanet && closestPlanet.data) {
         setHoveredPlanet(closestPlanet.data)

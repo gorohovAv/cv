@@ -1,5 +1,8 @@
-// File: text.ts
-export const texts: Record<string, { ru: string; en: string }> = {
+// File: src/text.ts
+export type TextItem = { ru: string; en: string };
+
+// Разрешаем как одиночные объекты, так и массивы объектов (для bullets)
+export const texts: Record<string, TextItem | TextItem[]> = {
   // Sidebar
   'sidebar.about': { ru: 'Обо мне', en: 'About' },
   'sidebar.education': { ru: 'Образование', en: 'Education' },
