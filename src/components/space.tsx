@@ -42,42 +42,32 @@ function getStarColor(spect: string): string {
   }
 }
 
-// Извлекает числовой идентификатор из Gliese/GJ/GL имени
-// Примеры: "GL 273" -> "273", "GJ 273" -> "273", "Gliese 273" -> "273"
 function extractGlieseNumber(name: string): string | null {
   if (!name) return null
   const normalized = name.trim().toUpperCase()
-  
-  // Ищем паттерны: GL 273, GJ 273, GLIESE 273, GJ273, GL273
   const match = normalized.match(/^(?:GL|GJ|GLIESE)\s*(\d+)(?:\s*[A-Z])?$/)
   if (match) {
     return match[1]
   }
-  
   return null
 }
 
-// Извлекает идентификаторы каталогов из hostname NASA
-// Возвращает объект с возможными идентификаторами
 function extractCatalogIds(hostname: string): { gliese?: string; hd?: string; hip?: string } {
   if (!hostname) return {}
   
   const result: { gliese?: string; hd?: string; hip?: string } = {}
   const upper = hostname.toUpperCase()
   
-  // Gliese/GJ/GL
   const glMatch = upper.match(/(?:GL|GJ|GLIESE)\s*(\d+)/)
   if (glMatch) {
     result.gliese = glMatch[1]
   }
   
-  // HD
   const hdMatch = upper.match(/HD\s*(\d+)/)
   if (hdMatch) {
     result.hd = hdMatch[1]
   }
   
-  // HIP
   const hipMatch = upper.match(/HIP\s*(\d+)/)
   if (hipMatch) {
     result.hip = hipMatch[1]
@@ -86,17 +76,14 @@ function extractCatalogIds(hostname: string): { gliese?: string; hd?: string; hi
   return result
 }
 
-// Проверяет, соответствует ли планета звезде
 function matchPlanetToStar(planet: PlanetData, star: StarData): { matched: boolean; method: string } {
   const hostname = planet.hostname || ''
   const starName = star.name || ''
   
-  // 1. Точный матч по имени (hostname = name)
   if (hostname.toLowerCase().trim() === starName.toLowerCase().trim()) {
     return { matched: true, method: 'exact name' }
   }
   
-  // 2. Матч по Gliese/GJ/GL идентификатору
   const starGlNum = extractGlieseNumber(star.gl)
   const hostCatalogIds = extractCatalogIds(hostname)
   
@@ -104,7 +91,6 @@ function matchPlanetToStar(planet: PlanetData, star: StarData): { matched: boole
     return { matched: true, method: 'Gliese/GJ/GL ID' }
   }
   
-  // 3. Матч по HD идентификатору
   if (star.hd && hostCatalogIds.hd) {
     const starHdNum = star.hd.replace(/\D/g, '')
     if (starHdNum === hostCatalogIds.hd) {
@@ -112,7 +98,6 @@ function matchPlanetToStar(planet: PlanetData, star: StarData): { matched: boole
     }
   }
   
-  // 4. Матч по Hipparcos идентификатору
   if (star.hip && hostCatalogIds.hip) {
     const starHipNum = star.hip.replace(/\D/g, '')
     if (starHipNum === hostCatalogIds.hip) {
@@ -120,7 +105,6 @@ function matchPlanetToStar(planet: PlanetData, star: StarData): { matched: boole
     }
   }
   
-  // 5. Частичный матч по имени (hostname содержит name или наоборот)
   const hostnameLower = hostname.toLowerCase().trim()
   const starNameLower = starName.toLowerCase().trim()
   if (hostnameLower.includes(starNameLower) || starNameLower.includes(hostnameLower)) {
@@ -134,7 +118,6 @@ function SpaceScene() {
   const stars = useStore(s => s.stars)
   const planets = useStore(s => s.planets)
   
-  // Логируем статистику по методам матчинга
   const matchStats = {
     'exact name': 0,
     'Gliese/GJ/GL ID': 0,
@@ -144,7 +127,6 @@ function SpaceScene() {
     'none': 0,
   }
   
-  // Convert StarData to StarSystemData with color and planets
   const systems: StarSystemData[] = stars.map(star => {
     const starPlanets: PlanetData[] = []
     
@@ -156,7 +138,6 @@ function SpaceScene() {
       }
     })
     
-    // Логируем только звезды с планетами
     if (starPlanets.length > 0) {
       console.log(`\n🔍 Star: ${star.name}`)
       console.log(`   GL: ${star.gl || 'N/A'}, HD: ${star.hd || 'N/A'}, HIP: ${star.hip || 'N/A'}`)
@@ -183,7 +164,6 @@ function SpaceScene() {
     }
   })
   
-  // Логируем общую статистику
   const starsWithPlanets = systems.filter(s => s.planets.length > 0)
   console.log(`\n📊 Matching summary:`)
   console.log(`   Total stars: ${systems.length}`)
@@ -229,42 +209,37 @@ export default function Space() {
     
     const loadData = async () => {
       try {
-        setLoading(true, 0, 'Loading star catalog')
+        setLoading(true, 10, 'Loading star catalog')
         
-        // Используем BASE_URL для корректного разрешения путей как в dev, так и в prod (GitHub Pages)
         const baseUrl = import.meta.env.BASE_URL
-        
-        // Load HYG star catalog
         const hygUrl = `${baseUrl}hyg_v42.csv`
         const hygResponse = await fetch(hygUrl)
         if (!hygResponse.ok) {
           throw new Error(`Failed to fetch star catalog: ${hygResponse.status} ${hygResponse.statusText} at ${hygUrl}`)
         }
         const hygText = await hygResponse.text()
+        
         setLoading(true, 30, 'Parsing star catalog')
-        
         let stars = parseHYG(hygText)
-        setLoading(true, 50, 'Loading exoplanet database')
         
-        // Load NASA exoplanet database
+        setLoading(true, 50, 'Loading exoplanet database')
         const nasaUrl = `${baseUrl}PS_2026.07.09_23.35.24.csv`
         const nasaResponse = await fetch(nasaUrl)
         if (!nasaResponse.ok) {
           throw new Error(`Failed to fetch exoplanet database: ${nasaResponse.status} ${nasaResponse.statusText} at ${nasaUrl}`)
         }
         const nasaText = await nasaResponse.text()
-        setLoading(true, 80, 'Parsing exoplanet database')
         
+        setLoading(true, 60, 'Parsing exoplanet database')
         let planets = parseNASAExoplanets(nasaText)
         
-        // Add Solar System programmatically
         const sun: StarData = {
           id: 0,
           name: 'Sun',
           ra: 0,
           dec: 0,
           dist: 0,
-          mag: 4.83, // Absolute magnitude for proper rendering size
+          mag: 4.83,
           spect: 'G2V',
           x: 0,
           y: 0,
@@ -330,14 +305,15 @@ export default function Space() {
         setStars(stars)
         setPlanets(planets)
         
-        setLoading(true, 100, 'Initializing space')
+        setLoading(true, 80, 'Initializing space')
         
-        // Увеличенная задержка позволяет Canvas и WebGL полностью инициализироваться в фоне,
-        // пока пользователь видит лоадер. Это полностью устраняет "мигание" пустого экрана.
         setTimeout(() => {
-          setLoading(false, 0, '')
-          setDataLoaded(true)
-        }, 2500)
+          setLoading(true, 100, 'Finalizing')
+          setTimeout(() => {
+            setLoading(false, 0, '')
+            setDataLoaded(true)
+          }, 300)
+        }, 1500)
         
       } catch (error) {
         console.error('Failed to load data:', error)
@@ -349,24 +325,23 @@ export default function Space() {
   }, [dataLoaded, setStars, setPlanets, setLoading])
 
   return (
-    <>
-      {/* Canvas рендерится всегда, чтобы инициализация WebGL происходила в фоне под лоадером */}
-      <div className="space-container">
-        <Canvas
-          camera={{ position: [0, 0, 80], fov: 60 }}
-          gl={{ antialias: true, alpha: false }}
-        >
-          <color attach="background" args={['#000008']} />
-          <fog attach="fog" args={['#000008', 100, 300]} />
-          <SpaceScene />
-        </Canvas>
-        {/* Hover компоненты вынесены из Canvas для правильного позиционирования */}
-        <StarHover />
-        <PlanetHover />
-      </div>
+    // Явно задаем zIndex: 1, чтобы этот контейнер (и его лоадер с z-index: 10) 
+    // гарантированно находились НИЖЕ сайдбара (z-index: 9999)
+    <div className="space-container" style={{ position: 'relative', width: '100%', height: '100%', zIndex: 1 }}>
+      <Canvas
+        camera={{ position: [0, 0, 80], fov: 60 }}
+        gl={{ antialias: true, alpha: false }}
+        style={{ width: '100%', height: '100%' }}
+      >
+        <color attach="background" args={['#000008']} />
+        <fog attach="fog" args={['#000008', 100, 300]} />
+        <SpaceScene />
+      </Canvas>
       
-      {/* Лоадер отображается поверх Canvas, пока идет загрузка */}
+      <StarHover />
+      <PlanetHover />
+      
       {isLoading && <Loader progress={loadingProgress} text={loadingText} />}
-    </>
+    </div>
   )
 }

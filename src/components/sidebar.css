@@ -9,10 +9,14 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px 0;
-  z-index: 10;
+  /* Увеличен z-index, чтобы гарантированно быть поверх лоадера (у которого z-index: 10) 
+     и оставаться кликабельным во время загрузки космоса */
+  z-index: 1000;
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(10px);
   border-right: 1px solid rgba(255, 170, 0, 0.1);
+  /* Добавлено для гарантии получения событий мыши поверх других элементов */
+  pointer-events: auto;
 }
 
 .sidebar-icons {

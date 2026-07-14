@@ -1,12 +1,11 @@
+/* File: src/components/space.css */
+/* Добавлено для гарантии корректного позиционирования абсолютного лоадера внутри контейнера */
 .space-container {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100%;
   height: 100%;
-  z-index: 0;
+  overflow: hidden;
 }
-
 .space-container canvas {
   display: block;
 }
