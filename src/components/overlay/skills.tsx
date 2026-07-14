@@ -1,8 +1,5 @@
-// File: src/components/overlay/skills.tsx
 import SkillCloud from '../Cloud'
 import type { Skill } from '../Cloud'
-import { useStore } from '../../store/store'
-import { getText } from '../../text'
 
 const skillsData: Skill[] = [
   { name: 'TypeScript', size: 5, descRu: 'Основная технология веба', descEn: 'Main web technology' },
@@ -17,8 +14,6 @@ const skillsData: Skill[] = [
 ]
 
 export default function Skills() {
-  const language = useStore(s => s.language)
-  const t = (key: string) => getText(key, language)
 
   return (
     <div className="overlay-section skills-section">
