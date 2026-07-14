@@ -15,6 +15,17 @@ export default function Education() {
           <p className="timeline-degree">{t('education.spbpu.degree')}</p>
           <p className="timeline-desc">{t('education.spbpu.faculty')}</p>
         </div>
+        
+      </div>
+            <div className="timeline-item">
+        <div className="timeline-dot" />
+        <div className="timeline-content">
+          <h4>{t('education.spbpu.maga')}</h4>
+          <span className="timeline-year">{t('education.spbpu.maga.year')}</span>
+          <p className="timeline-degree">{t('education.spbpu.maga.degree')}</p>
+          <p className="timeline-desc">{t('education.spbpu.maga.faculty')}</p>
+        </div>
+        
       </div>
 
       <div className="timeline-divider">
