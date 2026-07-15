@@ -1,8 +1,8 @@
 .overlay-backdrop {
   position: absolute;
   top: 0;
-  left: 60px;
-  width: calc(100% - 60px);
+  left: 78px;
+  width: calc(100% - 78px);
   height: 100%;
   z-index: 20;
   display: flex;
@@ -82,8 +82,7 @@
   .overlay-backdrop {
     left: 0;
     width: 100%;
-    bottom: 60px;
-    height: auto;
+    height: 100%;
     top: 0;
   }
 
