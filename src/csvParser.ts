@@ -11,9 +11,9 @@ export interface StarData {
   x: number
   y: number
   z: number
-  gl: string // Gliese catalog identifier (e.g., "GL 273")
-  hd: string // HD catalog identifier
-  hip: string // Hipparcos catalog identifier
+  gl: string
+  hd: string
+  hip: string
 }
 
 export interface PlanetData {
@@ -144,6 +144,96 @@ function parseString(value: string): string {
   return value.replace(/^"|"$/g, '').trim()
 }
 
+export function getStarColor(spect: string): string {
+  if (!spect) return '#ffffff'
+  const spectralClass = spect.charAt(0).toUpperCase()
+  
+  switch (spectralClass) {
+    case 'O': return '#9bb0ff'
+    case 'B': return '#aabfff'
+    case 'A': return '#cad7ff'
+    case 'F': return '#f8f7ff'
+    case 'G': return '#fff4ea'
+    case 'K': return '#ffd2a1'
+    case 'M': return '#ffcc6f'
+    case 'L': return '#ff8844'
+    case 'T': return '#cc5533'
+    default: return '#ffffff'
+  }
+}
+
+export function extractGlieseNumber(name: string): string | null {
+  if (!name) return null
+  const normalized = name.trim().toUpperCase()
+  const match = normalized.match(/^(?:GL|GJ|GLIESE)\s*(\d+)(?:\s*[A-Z])?$/)
+  if (match) {
+    return match[1]
+  }
+  return null
+}
+
+export function extractCatalogIds(hostname: string): { gliese?: string; hd?: string; hip?: string } {
+  if (!hostname) return {}
+  
+  const result: { gliese?: string; hd?: string; hip?: string } = {}
+  const upper = hostname.toUpperCase()
+  
+  const glMatch = upper.match(/(?:GL|GJ|GLIESE)\s*(\d+)/)
+  if (glMatch) {
+    result.gliese = glMatch[1]
+  }
+  
+  const hdMatch = upper.match(/HD\s*(\d+)/)
+  if (hdMatch) {
+    result.hd = hdMatch[1]
+  }
+  
+  const hipMatch = upper.match(/HIP\s*(\d+)/)
+  if (hipMatch) {
+    result.hip = hipMatch[1]
+  }
+  
+  return result
+}
+
+export function matchPlanetToStar(planet: PlanetData, star: StarData): { matched: boolean; method: string } {
+  const hostname = planet.hostname || ''
+  const starName = star.name || ''
+  
+  if (hostname.toLowerCase().trim() === starName.toLowerCase().trim()) {
+    return { matched: true, method: 'exact name' }
+  }
+  
+  const starGlNum = extractGlieseNumber(star.gl)
+  const hostCatalogIds = extractCatalogIds(hostname)
+  
+  if (starGlNum && hostCatalogIds.gliese && starGlNum === hostCatalogIds.gliese) {
+    return { matched: true, method: 'Gliese/GJ/GL ID' }
+  }
+  
+  if (star.hd && hostCatalogIds.hd) {
+    const starHdNum = star.hd.replace(/\D/g, '')
+    if (starHdNum === hostCatalogIds.hd) {
+      return { matched: true, method: 'HD ID' }
+    }
+  }
+  
+  if (star.hip && hostCatalogIds.hip) {
+    const starHipNum = star.hip.replace(/\D/g, '')
+    if (starHipNum === hostCatalogIds.hip) {
+      return { matched: true, method: 'HIP ID' }
+    }
+  }
+  
+  const hostnameLower = hostname.toLowerCase().trim()
+  const starNameLower = starName.toLowerCase().trim()
+  if (hostnameLower.includes(starNameLower) || starNameLower.includes(hostnameLower)) {
+    return { matched: true, method: 'partial name' }
+  }
+  
+  return { matched: false, method: 'none' }
+}
+
 export function parseHYG(text: string): StarData[] {
   const lines = text.split('\n').filter(line => line.trim())
   if (lines.length < 2) return []
@@ -151,7 +241,6 @@ export function parseHYG(text: string): StarData[] {
   const headers = parseCSVLine(lines[0])
   const stars: StarData[] = []
   
-  // Find column indices
   const idIdx = headers.indexOf('id')
   const properIdx = headers.indexOf('proper')
   const raIdx = headers.indexOf('ra')
@@ -171,14 +260,11 @@ export function parseHYG(text: string): StarData[] {
     if (values.length < headers.length) continue
     
     const name = parseString(values[properIdx])
-    if (!name) continue // Skip unnamed stars
+    if (!name) continue 
     
     const dist = parseNumber(values[distIdx])
-    if (isNaN(dist) || dist <= 0) continue // Skip stars without valid distance
+    if (isNaN(dist) || dist <= 0) continue 
     
-    // Фильтр: показываем только звезды на расстоянии до 500 световых лет от Земли.
-    // В базе HYG расстояние (dist) указано в парсеках.
-    // 1 парсек ≈ 3.262 световых года. 500 световых лет ≈ 153.28 парсек.
     if (dist > 153.3) continue
     
     stars.push({
@@ -208,7 +294,6 @@ export function parseNASAExoplanets(text: string): PlanetData[] {
   const headers = parseCSVLine(lines[0])
   const planets: PlanetData[] = []
   
-  // Create index map
   const getIndex = (name: string) => headers.indexOf(name)
   
   for (let i = 1; i < lines.length; i++) {

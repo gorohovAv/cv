@@ -1,6 +1,6 @@
 // File: src/store/store.ts
 import { create } from 'zustand'
-import type { StarData, PlanetData } from '../csvParser'
+import type { PlanetData } from '../csvParser'
 
 export type Language = 'ru' | 'en'
 export type OverlayType = 'about' | 'education' | 'experience' | 'projects' | 'skills' | 'contacts' | 'license' | null
@@ -32,10 +32,8 @@ interface AppState {
   hoveredPlanet: PlanetData | null
   setHoveredPlanet: (planet: PlanetData | null) => void
   
-  stars: StarData[]
-  setStars: (stars: StarData[]) => void
-  planets: PlanetData[]
-  setPlanets: (planets: PlanetData[]) => void
+  systems: StarSystemData[]
+  setSystems: (systems: StarSystemData[]) => void
   
   isLoading: boolean
   loadingProgress: number
@@ -55,10 +53,8 @@ export const useStore = create<AppState>((set) => ({
   hoveredPlanet: null,
   setHoveredPlanet: (planet) => set({ hoveredPlanet: planet }),
   
-  stars: [],
-  setStars: (stars) => set({ stars }),
-  planets: [],
-  setPlanets: (planets) => set({ planets }),
+  systems: [],
+  setSystems: (systems) => set({ systems }),
   
   isLoading: false,
   loadingProgress: 0,
