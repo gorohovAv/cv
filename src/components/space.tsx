@@ -118,35 +118,16 @@ function SpaceScene() {
   const stars = useStore(s => s.stars)
   const planets = useStore(s => s.planets)
   
-  const matchStats = {
-    'exact name': 0,
-    'Gliese/GJ/GL ID': 0,
-    'HD ID': 0,
-    'HIP ID': 0,
-    'partial name': 0,
-    'none': 0,
-  }
-  
   const systems: StarSystemData[] = stars.map(star => {
     const starPlanets: PlanetData[] = []
     
+    // Оптимизация: вызываем matchPlanetToStar только один раз для каждой планеты
     planets.forEach(planet => {
       const result = matchPlanetToStar(planet, star)
       if (result.matched) {
         starPlanets.push(planet)
-        matchStats[result.method as keyof typeof matchStats]++
       }
     })
-    
-    if (starPlanets.length > 0) {
-      console.log(`\n🔍 Star: ${star.name}`)
-      console.log(`   GL: ${star.gl || 'N/A'}, HD: ${star.hd || 'N/A'}, HIP: ${star.hip || 'N/A'}`)
-      console.log(`   Found ${starPlanets.length} planet(s):`)
-      starPlanets.forEach(p => {
-        const result = matchPlanetToStar(p, star)
-        console.log(`      - ${p.pl_name} (hostname: ${p.hostname}) via ${result.method}`)
-      })
-    }
     
     return {
       id: star.id,
@@ -161,18 +142,6 @@ function SpaceScene() {
       z: star.z,
       color: getStarColor(star.spect),
       planets: starPlanets,
-    }
-  })
-  
-  const starsWithPlanets = systems.filter(s => s.planets.length > 0)
-  console.log(`\n📊 Matching summary:`)
-  console.log(`   Total stars: ${systems.length}`)
-  console.log(`   Stars with planets: ${starsWithPlanets.length}`)
-  console.log(`   Stars without planets: ${systems.length - starsWithPlanets.length}`)
-  console.log(`   Match methods:`)
-  Object.entries(matchStats).forEach(([method, count]) => {
-    if (count > 0) {
-      console.log(`      ${method}: ${count}`)
     }
   })
 
@@ -197,15 +166,15 @@ function SpaceScene() {
 export default function Space() {
   const setStars = useStore(s => s.setStars)
   const setPlanets = useStore(s => s.setPlanets)
-  const isLoading = useStore(s => s.isLoading)
+  const setLoading = useStore(s => s.setLoading)
   const loadingProgress = useStore(s => s.loadingProgress)
   const loadingText = useStore(s => s.loadingText)
-  const setLoading = useStore(s => s.setLoading)
   
-  const [dataLoaded, setDataLoaded] = useState(false)
+  // Локальное состояние для гарантированного отображения лоадера до полной готовности
+  const [isFullyLoaded, setIsFullyLoaded] = useState(false)
 
   useEffect(() => {
-    if (dataLoaded) return
+    if (isFullyLoaded) return
     
     const loadData = async () => {
       try {
@@ -220,7 +189,7 @@ export default function Space() {
         const hygText = await hygResponse.text()
         
         setLoading(true, 30, 'Parsing star catalog')
-        let stars = parseHYG(hygText)
+        const stars = parseHYG(hygText)
         
         setLoading(true, 50, 'Loading exoplanet database')
         const nasaUrl = `${baseUrl}PS_2026.07.09_23.35.24.csv`
@@ -231,7 +200,7 @@ export default function Space() {
         const nasaText = await nasaResponse.text()
         
         setLoading(true, 60, 'Parsing exoplanet database')
-        let planets = parseNASAExoplanets(nasaText)
+        const planets = parseNASAExoplanets(nasaText)
         
         const sun: StarData = {
           id: 0,
@@ -299,34 +268,32 @@ export default function Space() {
           rowupdate: '', pl_pubdate: '', releasedate: '',
         } as PlanetData))
         
-        stars = [sun, ...stars]
-        planets = [...planets, ...solarPlanets]
-        
-        setStars(stars)
-        setPlanets(planets)
-        
         setLoading(true, 80, 'Initializing space')
         
+        // Объединяем и устанавливаем данные
+        setStars([sun, ...stars])
+        setPlanets([...planets, ...solarPlanets])
+        
+        setLoading(true, 100, 'Finalizing')
+        
+        // Небольшая задержка, чтобы пользователь увидел 100% и Canvas успел корректно отрисоваться
+        // Это предотвращает "мигание" или повторное появление лоадера
         setTimeout(() => {
-          setLoading(true, 100, 'Finalizing')
-          setTimeout(() => {
-            setLoading(false, 0, '')
-            setDataLoaded(true)
-          }, 300)
-        }, 1500)
+          setLoading(false, 0, '')
+          setIsFullyLoaded(true)
+        }, 500)
         
       } catch (error) {
         console.error('Failed to load data:', error)
         setLoading(false, 0, 'Ошибка загрузки данных. Проверьте консоль.')
+        setIsFullyLoaded(true)
       }
     }
     
     loadData()
-  }, [dataLoaded, setStars, setPlanets, setLoading])
+  }, [isFullyLoaded, setStars, setPlanets, setLoading])
 
   return (
-    // Явно задаем zIndex: 1, чтобы этот контейнер (и его лоадер с z-index: 10) 
-    // гарантированно находились НИЖЕ сайдбара (z-index: 9999)
     <div className="space-container" style={{ position: 'relative', width: '100%', height: '100%', zIndex: 1 }}>
       <Canvas
         camera={{ position: [0, 0, 80], fov: 60 }}
@@ -341,7 +308,7 @@ export default function Space() {
       <StarHover />
       <PlanetHover />
       
-      {isLoading && <Loader progress={loadingProgress} text={loadingText} />}
+      {!isFullyLoaded && <Loader progress={loadingProgress ?? 0} text={loadingText ?? 'Инициализация'} />}
     </div>
   )
 }

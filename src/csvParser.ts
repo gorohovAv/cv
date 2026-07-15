@@ -176,6 +176,11 @@ export function parseHYG(text: string): StarData[] {
     const dist = parseNumber(values[distIdx])
     if (isNaN(dist) || dist <= 0) continue // Skip stars without valid distance
     
+    // Фильтр: показываем только звезды на расстоянии до 500 световых лет от Земли.
+    // В базе HYG расстояние (dist) указано в парсеках.
+    // 1 парсек ≈ 3.262 световых года. 500 световых лет ≈ 153.28 парсек.
+    if (dist > 153.3) continue
+    
     stars.push({
       id: parseNumber(values[idIdx]) || i,
       name: name,
