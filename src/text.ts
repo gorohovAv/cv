@@ -114,8 +114,8 @@ export const texts: Record<string, TextItem | TextItem[]> = {
 
   'projects.project3.name': { ru: 'Интерактивная звездная карта', en: 'Interactive Star Map' },
   'projects.project3.desc': { 
-    ru: 'Вы сейчас здесь. Визуализация звездных систем и экзопланет в реальном времени.', 
-    en: 'You are here. Real-time visualization of star systems and exoplanets.' 
+    ru: 'Вы сейчас здесь.', 
+    en: 'You are here.' 
   },
 
   // Skills

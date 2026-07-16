@@ -35,9 +35,6 @@ export default function SkillCloud({ skills }: SkillCloudProps) {
       <div className="skill-description">
         {hoveredSkill ? (
           <div>
-            <span className="skill-size-badge">
-              {getText('skills.hover.level', language)}: {hoveredSkill.size}/5
-            </span>
             <p>{language === 'ru' ? hoveredSkill.descRu : hoveredSkill.descEn}</p>
           </div>
         ) : (

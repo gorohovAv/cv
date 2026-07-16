@@ -2,10 +2,10 @@ import SkillCloud from '../Cloud'
 import type { Skill } from '../Cloud'
 
 const skillsData: Skill[] = [
-  { name: 'TypeScript', size: 5, descRu: 'Основная технология веба', descEn: 'Main web technology' },
-  { name: 'React', size: 4, descRu: 'Основная технология веба', descEn: 'Main web technology' },
+  { name: 'TypeScript', size: 5, descRu: 'Основная технология веба', descEn: 'Major web technology' },
+  { name: 'React', size: 4, descRu: 'Основная технология веба', descEn: 'Major web technology' },
   { name: 'PostgreSQL', size: 4, descRu: 'Отраслевой стандарт реляционной БД. Работал как с сырыми запросами, так и через ORM', descEn: 'Industry standard relational DB. Worked with both raw queries and ORM' },
-  { name: 'React Native', size: 3, descRu: 'Открытый фитнес треккер ФитПлот', descEn: 'Open fitness tracker FitPlot' },
+  { name: 'React Native', size: 3, descRu: 'Открытый фитнес треккер ФитПлот', descEn: 'OSS fitness tracker FitPlot' },
   { name: 'Zustand', size: 2, descRu: 'Мой базовый выбор стора на клиентской части', descEn: 'My basic choice of store on the client side' },
   { name: 'Python', size: 2, descRu: 'Поддержка и развитие проекта "Помощник планировщика", настройка инференса БЯМ', descEn: 'Support and development of "Scheduler Assistant", LLM inference setup' },
   { name: 'Go', size: 1, descRu: 'Настройка ИИ пайплайнов и создание бэкенда проекта "Помощник администратора"', descEn: 'AI pipelines setup and backend for "Admin Assistant"' },
