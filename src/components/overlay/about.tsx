@@ -5,9 +5,6 @@ export default function About() {
   const language = useStore(s => s.language)
   const t = (key: string) => getText(key, language)
 
-  const mainStack = t('about.stack.main').split(', ')
-  const extraStack = t('about.stack.extra').split(', ')
-
   return (
     <div className="overlay-section about-section">
       <div className="about-avatar">
@@ -25,24 +22,6 @@ export default function About() {
       </p>
 
       <p className="about-description">{t('about.description')}</p>
-
-      <div className="about-stack-block">
-        <h4 className="about-stack-title">{t('about.stack.title')}</h4>
-        <div className="about-stack-chips">
-          {mainStack.map((s: string) => (
-            <span key={s} className="chip chip-primary">{s.trim()}</span>
-          ))}
-        </div>
-      </div>
-
-      <div className="about-stack-block">
-        <h4 className="about-stack-title">{t('about.stack.extra.title')}</h4>
-        <div className="about-stack-chips">
-          {extraStack.map((s: string) => (
-            <span key={s} className="chip chip-secondary">{s.trim()}</span>
-          ))}
-        </div>
-      </div>
     </div>
   )
 }

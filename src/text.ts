@@ -19,22 +19,12 @@ export const texts: Record<string, TextItem | TextItem[]> = {
   'about.age': { ru: '25 лет', en: '25 years old' },
   'about.location': { ru: 'Санкт-Петербург, Россия', en: 'Saint Petersburg, Russia' },
   'about.email': { ru: 'gorokhoff.art@mail.ru', en: 'gorokhoff.art@mail.ru' },
-  'about.phone': { ru: '@Eggplant11', en: '@Eggplant11' }, // Заменено на Telegram
+  'about.phone': { ru: '@Eggplant11', en: '@Eggplant11' },
   'about.github': { ru: 'github.com/gorohovAv', en: 'github.com/gorohovAv' },
   'about.github.url': { ru: 'https://github.com/gorohovAv', en: 'https://github.com/gorohovAv' },
   'about.description': {
     ru: 'Fullstack-разработчик широкого профиля. Работаю с веб-, десктоп- и мобильными приложениями (React Native). Закрываю задачи как на клиенте, так и на сервере. Умею использовать ИИ-инструменты в работе без потери качества результата.',
     en: 'Versatile fullstack developer. I work on web, desktop, and mobile (React Native) applications, handling both client and server sides. I integrate AI tools into my workflow without compromising quality.'
-  },
-  'about.stack.title': { ru: 'Основной стек', en: 'Core Stack' },
-  'about.stack.main': {
-    ru: 'TypeScript, React, Zustand, Go (Gin, GORM), PostgreSQL',
-    en: 'TypeScript, React, Zustand, Go (Gin, GORM), PostgreSQL'
-  },
-  'about.stack.extra.title': { ru: 'Также работал с', en: 'Also worked with' },
-  'about.stack.extra': {
-    ru: 'Rust, Python, Django, FastAPI, NestJS, Next.js, Redux Toolkit, Helix, Electron, Docker, Prisma, BEM',
-    en: 'Rust, Python, Django, FastAPI, NestJS, Next.js, Redux Toolkit, Helix, Electron, Docker, Prisma, BEM'
   },
 
   // Education
@@ -126,7 +116,7 @@ export const texts: Record<string, TextItem | TextItem[]> = {
   // Contacts
   'contacts.title': { ru: 'Контакты', en: 'Contacts' },
   'contacts.email.label': { ru: 'Email', en: 'Email' },
-  'contacts.telegram.label': { ru: 'Telegram', en: 'Telegram' }, // Заменено с phone на telegram
+  'contacts.telegram.label': { ru: 'Telegram', en: 'Telegram' },
   'contacts.github.label': { ru: 'GitHub', en: 'GitHub' },
 
   // License

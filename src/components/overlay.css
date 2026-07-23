@@ -1,10 +1,10 @@
 .overlay-backdrop {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 78px;
   width: calc(100% - 78px);
-  height: 100%;
-  z-index: 20;
+  height: 100dvh;
+  z-index: 1001;
   display: flex;
   animation: fadeIn 0.3s ease;
 }
@@ -28,6 +28,7 @@
   align-items: center;
   padding: 24px 28px;
   border-bottom: 1px solid rgba(255, 170, 0, 0.1);
+  flex-shrink: 0;
 }
 
 .overlay-header h2 {
@@ -49,6 +50,7 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s;
+  flex-shrink: 0;
 }
 
 .overlay-close svg {
@@ -64,6 +66,7 @@
 .overlay-content {
   flex: 1;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   padding: 24px 28px;
 }
 
@@ -82,7 +85,7 @@
   .overlay-backdrop {
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100dvh;
     top: 0;
   }
 
@@ -98,7 +101,7 @@
   }
 
   .overlay-content {
-    padding: 16px 20px;
+    padding: 16px 20px 80px 20px; /* Отступ снизу, чтобы контент не перекрывался мобильным сайдбаром */
   }
 }
 
@@ -147,44 +150,6 @@
   color: rgba(255, 255, 255, 0.7);
   margin-top: 12px;
   text-align: left;
-}
-
-.about-stack-block {
-  width: 100%;
-  text-align: left;
-  margin-top: 16px;
-}
-
-.about-stack-title {
-  font-size: 13px;
-  color: rgba(255, 170, 0, 0.8);
-  margin-bottom: 8px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.about-stack-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.chip {
-  font-size: 12px;
-  padding: 4px 10px;
-  border-radius: 20px;
-}
-
-.chip-primary {
-  background: rgba(255, 170, 0, 0.12);
-  color: rgba(255, 170, 0, 0.9);
-  border: 1px solid rgba(255, 170, 0, 0.2);
-}
-
-.chip-secondary {
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Timeline */
